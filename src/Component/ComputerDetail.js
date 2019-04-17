@@ -7,12 +7,13 @@ class ComputerDetail extends Component {
 }
 
     render(){
+        let { computer } = this.state;
       return (
           <tr>
-              <td>{this.state.computer.name}</td>
-              <td>{this.state.computer.introduced}</td>
-              <td>{this.state.computer.discontinued}</td>
-              <td>{this.state.computer.companyname}</td>
+              <td>{computer.name}</td>
+              <td>{computer.introduced}</td>
+              <td>{computer.discontinued}</td>
+              <td>{computer.companyname}</td>
           </tr>
       );
     }

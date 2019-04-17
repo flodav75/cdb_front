@@ -14,10 +14,10 @@ class Search extends Component {
     };
 
     render() {
+      let{name} = this.state
       return (
-          <div>
-        <Input placeholder='Search Computer' onChange={this.onChange} value={this.state.name}/>
-        <FontAwesomeIcon icon={faSearch} onClick={this.props.onSearch(this.state.name)} />
+        <div>
+          <Input placeholder='Search Computer' onChange={this.onChange} value={name}/> <FontAwesomeIcon icon={faSearch} onClick={this.props.onSearch(name)} />
         </div>
       );
     }
