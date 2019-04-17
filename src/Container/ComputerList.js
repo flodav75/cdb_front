@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 
 import ComputerDetail from '../Component/ComputerDetail';
+import { Table } from 'reactstrap';
 
 import {MOCK} from "../Mock";
 import Search from "../Component/Search";
+
+import "../App.css";
+
 const address = `http://10.0.1.70:8080/api/computers/`
+
 class ComputerList extends Component {
 
-    state={computers:MOCK}
+    state={computers:[]}
 
     componentDidMount() {
         this.getAll();
     }
 
     getAll(){
-        this.setState({recipes:MOCK})
+        this.setState({computers:MOCK})
     }
 
     //Cross origin problem
@@ -36,7 +41,7 @@ class ComputerList extends Component {
 
               <Search onSearch={this.search}/>
 
-              <table class="App">
+              <Table class="table">
                   <tr>
                       <th>name</th>
                       <th>introduced</th>
@@ -50,7 +55,7 @@ class ComputerList extends Component {
                           })
                       }
 
-              </table>
+              </Table>
 
           </div>
 
