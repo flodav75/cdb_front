@@ -2,8 +2,8 @@ export const MOCK =[
     {
         "id": "1",
         "name": "MacBook Pro 15.4 inch",
-        "introduced": "",
-        "discontinued": "",
+        "introduced": "11/01/1995",
+        "discontinued": "11/01/1995",
         "companyname": "Apple Inc.",
         "companyId": "1"
     },

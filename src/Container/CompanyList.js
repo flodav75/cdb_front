@@ -4,11 +4,12 @@ import CompanyDetail from '../Component/CompanyDetail';
 class ComputerList extends Component {
     render() {
       return (
-          <CompanyDetail/>
-  
+          <div class="App">
+              <CompanyDetail/>
+          </div>
+
       );
     }
   }
   
   export default ComputerList;
-  

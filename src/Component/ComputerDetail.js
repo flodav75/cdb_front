@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
 
 class ComputerDetail extends Component {
-    render() {
+
+    state={
+    computer:this.props.computer
+}
+
+    render(){
       return (
-          <div>Computer works</div>
-  
+          <tr>
+              <td>{this.state.computer.name}</td>
+              <td>{this.state.computer.introduced}</td>
+              <td>{this.state.computer.discontinued}</td>
+              <td>{this.state.computer.companyname}</td>
+          </tr>
       );
     }
   }

@@ -7,10 +7,10 @@ import NavBar from './Component/NavBar';
 class App extends Component {
   render() {
     return (
-<div>
-      <NavBar/>
-      <ComputerList/>
-      </div>
+        <div>
+              <NavBar/>
+              <ComputerList/>
+        </div>
 
     );
   }
