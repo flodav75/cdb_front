@@ -33,10 +33,10 @@ class NavBar extends Component {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink>Computers</NavLink>
+                <NavLink onClick={this.props.onToggle}>Computers</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink>Companies</NavLink>
+                <NavLink onClick={this.props.onToggle}>Companies</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>

@@ -16,6 +16,7 @@ class ComputerDetail extends Component {
   };
 
     render(){
+        let { computer } = this.state;
       return (
           <tr>
               <td onClick={this.toggleFormAccess}>
