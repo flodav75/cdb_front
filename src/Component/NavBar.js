@@ -13,6 +13,8 @@ import {
   DropdownItem
 } from 'reactstrap';
 
+import "./Navbar.css"
+
 class NavBar extends Component {
   state = {
     isOpen: false
@@ -26,17 +28,14 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div>
+      <div class="Navbar">
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Computer Database</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink onClick={this.props.onToggle}>Computers</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink onClick={this.props.onToggle}>Companies</NavLink>
+                <NavLink onClick={this.props.onToggle}>{this.props.pageMode ? "Companies" : "Computers"}</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
