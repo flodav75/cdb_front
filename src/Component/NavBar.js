@@ -13,7 +13,7 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-import "./Navbar.css"
+import "./Navbar.scss"
 
 class NavBar extends Component {
   state = {
@@ -28,7 +28,7 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div class="Navbar">
+      <div className="Navbar">
         <Navbar color="light" light expand="md">
           <NavbarBrand href="/">Computer Database</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />

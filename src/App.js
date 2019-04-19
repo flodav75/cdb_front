@@ -10,20 +10,19 @@ class App extends Component {
   }
 
   togglePageMode = () => {
-    this.setState({ 
-      pageMode: !this.state.pageMode 
+    this.setState({
+      pageMode: !this.state.pageMode
     })
-}
+  }
 
 
   render() {
     return (
 
-        <div>
-              <NavBar onToggle = {this.togglePageMode} pageMode = {this.state.pageMode}/>
-              { this.state.pageMode ? <ComputerList/> : <CompanyList/> }
-        </div>
-
+      <div>
+        <NavBar onToggle={this.togglePageMode} pageMode={this.state.pageMode} />
+        {this.state.pageMode ? <ComputerList /> : <CompanyList />}
+      </div>
 
     );
   }
