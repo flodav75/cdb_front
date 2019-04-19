@@ -3,28 +3,42 @@ import React, { Component } from 'react';
 import ComputerDetail from '../Component/ComputerDetail';
 import { Table, Container, Row } from 'reactstrap';
 
-import { MOCK } from "../Mock";
 import Search from "../Component/Search";
 
 import "../App.css";
 
+const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
-    state = { computers: [] }
+    state={computers:[]}
 
     componentDidMount() {
         this.getAll();
     }
 
-    getAll() {
-        this.setState({ computers: MOCK })
+    getAll(){
+        fetch(address)
+            .then(result => {
+                result.json().then(computers => {
+                    this.setState({ computers: computers })
+                })
+            })
+            .catch(error => console.log(error))
     }
+
+    delete = (id)  => {
+        fetch(address+`${id}`,
+            {
+                method: "delete",
+            }
+        ).then(()=>{this.getAll()})
+    }
+
 
     //Cross origin problem
     search = (name) => () => {
-        console.log(name);
-        fetch('http://10.0.1.70:8080/webapp/api/computers/Search?name='+`${name}`)
+        fetch(address+'Search?name='+`${name}`)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -49,6 +63,7 @@ class ComputerList extends Component {
                                     <th>introduced</th>
                                     <th>discontinued</th>
                                     <th>company</th>
+                                    <th> delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,9 +78,11 @@ class ComputerList extends Component {
                 </Container>
             </div>
 
-        );
-    }
-}
 
-export default ComputerList;
+  
+      );
+    }
+  }
+  
+  export default ComputerList;
 
