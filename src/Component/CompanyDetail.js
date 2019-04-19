@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 
 class CompanyDetail extends Component {
+  state = {
+    company: this.props.company
+  }
+
     render() {
-      return (
-          <div>Company works</div>
+        let { company } = this.state;
+        return (
+            <tr>
+                <td>{company.id}</td>
+                <td>{company.name}</td>
+            </tr>
   
       );
     }
