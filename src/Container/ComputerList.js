@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import ComputerDetail from '../Component/ComputerDetail';
 import { Table, Container, Row } from 'reactstrap';
 
-import { MOCK } from "../Mock";
 import Search from "../Component/Search";
+import Paging from "../Component/Paging";
+import ComputerDetail from '../Component/ComputerDetail';
 
 import "../App.css";
 
@@ -12,14 +12,24 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
-    state={computers:[]}
+    state = {
+        computers: [],
+        page: {
+            limit: 20,
+            page: 2,
+            
+        },
+        count: 0
+
+    }
 
     componentDidMount() {
         this.getAll();
+        this.getCount();
     }
 
-    getAll(){
-        fetch(address)
+    getAll() {
+        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -28,18 +38,32 @@ class ComputerList extends Component {
             .catch(error => console.log(error))
     }
 
-    delete = (id)  => {
-        fetch(address+`${id}`,
-            {
-                method: "delete",
-            }
-        ).then(()=>{this.getAll()})
+    getCount() {
+        fetch(address+'count')
+            .then(result => {
+                result.json().then(count => {
+                    this.setState({ count: count })
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+    setPage = () => (newPage) => () =>{
+        this.setState({page: { ...this.state.page, page: newPage}});
+        this.getAll();
     }
 
 
-    //Cross origin problem
+    delete = (id) => {
+        fetch(address + `${id}`,
+            {
+                method: "delete",
+            }
+        ).then(() => { this.getAll() })
+    }
+
     search = (name) => () => {
-        fetch(address+'Search?name='+`${name}`)
+        fetch(address + 'Search?name=' + `${name}`)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -64,15 +88,20 @@ class ComputerList extends Component {
                                     <th>introduced</th>
                                     <th>discontinued</th>
                                     <th>company</th>
-                                    <th> delete</th>
+                                    <th>delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} />
+                                        return <ComputerDetail key={computer.id} computer={computer} delete={this.delete} />
                                     })
                                 }
+
+                                <tr>
+                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage()}/></td>
+                                </tr>
+
                             </tbody>
                         </Table>
                     </Row>
@@ -80,10 +109,10 @@ class ComputerList extends Component {
             </div>
 
 
-  
-      );
+
+        );
     }
-  }
-  
-  export default ComputerList;
+}
+
+export default ComputerList;
 
