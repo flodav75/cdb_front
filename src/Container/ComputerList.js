@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 
 import ComputerDetail from '../Component/ComputerDetail';
 import { Table } from 'reactstrap';
-
-import {MOCK} from "../Mock";
 import Search from "../Component/Search";
 
 import "../App.css";
 
-const address = `http://10.0.1.70:8080/api/computers/`
+let address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
@@ -19,12 +17,27 @@ class ComputerList extends Component {
     }
 
     getAll(){
-        this.setState({computers:MOCK})
+        fetch(address)
+            .then(result => {
+                result.json().then(computers => {
+                    this.setState({ computers: computers })
+                })
+            })
+            .catch(error => console.log(error))
     }
+
+    delete = (id)  => {
+        fetch(address+`${id}`,
+            {
+                method: "delete",
+            }
+        ).then(()=>{this.getAll()})
+    }
+
 
     //Cross origin problem
     search = (name) => () => {
-        fetch(address+'Search?name='+`${name}`)
+        fetch(address+'Search?name='+`${name}`, {method:"get"})
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -47,11 +60,12 @@ class ComputerList extends Component {
                       <th>introduced</th>
                       <th>discontinued</th>
                       <th>company</th>
+                      <th>delete</th>
                   </tr>
 
                       {
                           this.state.computers.map(computer =>{
-                              return <ComputerDetail computer={computer}/>
+                              return <ComputerDetail key={computer.id} computer={computer} delete={this.delete}/>
                           })
                       }
 

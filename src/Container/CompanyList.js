@@ -7,7 +7,6 @@ class ComputerList extends Component {
           <div class="App">
               <CompanyDetail/>
           </div>
-
       );
     }
   }
