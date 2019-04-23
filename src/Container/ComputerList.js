@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ComputerDetail from '../Component/ComputerDetail';
-import {Table, Container, Row} from 'reactstrap';
+import {Table, Container, Row,Button} from 'reactstrap';
 
 import Search from "../Component/Search";
 import "../App.css";
@@ -18,8 +18,8 @@ class ComputerList extends Component {
             limit: 15,
             page: 1,
         }
-
     }
+
 
 
 
@@ -30,6 +30,18 @@ class ComputerList extends Component {
 
     componentDidUpdate(){
         this.getAll();
+    }
+
+
+    addComputerToDelete = (computer)=>{
+        this.setState({computersDelete:[...this.state.computersDelete, computer]});
+    }
+
+    removeComputerToDelete = (computer)=>{
+        var filtered = this.state.computersDelete.filter(function(value){
+            return value =! computer;
+        });
+        this.setState({computersDelete:filtered});
     }
 
     getAll() {
@@ -65,13 +77,24 @@ class ComputerList extends Component {
     };
 
 
+    clear=()=>{
+        this.setState({computersDelete:[]});
+    }
+
+    deleteComputers=()=>{
+        this.state.computersDelete.map(computer=>{
+            return this.delete(computer.id);
+        })
+        this.clear();
+        this.getAll();
+    }
 
     delete = (id)  => {
         fetch(address+`${id}`,
             {
                 method: "delete",
             }
-        ).then(()=>{this.getAll()})
+        )
     }
 
     search = (name) => () => {
@@ -91,7 +114,8 @@ class ComputerList extends Component {
                 <Container>
                     <Row>
                         <Search onSearch={this.search} />
-
+                        {this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.deleteComputers} >delete</Button>}
+                        {this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.clear} >clear</Button>}
                         <Table className="table">
                             <thead>
                                 <tr>
@@ -99,13 +123,15 @@ class ComputerList extends Component {
                                     <th>introduced</th>
                                     <th>discontinued</th>
                                     <th>company</th>
-                                    <th> delete</th>
+                                    <th>
+                                        {<Button variant="outline-warning" >Edit</Button>}
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} delete={this.delete}/>
+                                        return <ComputerDetail key={computer.id} computer={computer} removeToDelete={this.removeComputerToDelete} addToDelete={this.addComputerToDelete} delete={this.delete}/>
                                     })
                                 }
 

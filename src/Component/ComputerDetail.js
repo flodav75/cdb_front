@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
-import DeletePopUp from "./DeletePopUp";
-import {Button} from "reactstrap";
+
+import SelectComputer from "./SelectComputer";
 class ComputerDetail extends Component {
 
     state={
         computer:this.props.computer,
         isDelete:!this.props.computer || false
+
     }
 
     toggleDelete= ()=>{
@@ -22,8 +23,7 @@ class ComputerDetail extends Component {
                 <td>{computer.discontinued}</td>
                 <td>{computer.companyname}</td>
                 <td>
-                    <Button color="danger" onClick={this.toggleDelete}>delete</Button>
-                    {this.state.isDelete &&<DeletePopUp computer={this.state.computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
+                    <SelectComputer computer={this.state.computer} removeToDelete={this.props.removeToDelete}  addToDelete={this.props.addToDelete}/>
                 </td>
             </tr>
 
