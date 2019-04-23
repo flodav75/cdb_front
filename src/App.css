@@ -33,15 +33,3 @@ td, th {
   width: 50%;
 }
 
-button {
-  text-align: right;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
