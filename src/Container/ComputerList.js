@@ -4,6 +4,7 @@ import ComputerDetail from '../Component/ComputerDetail';
 import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
 
+
 import Search from "../Component/Search";
 import Paging from "../Component/Paging";
 
@@ -24,20 +25,25 @@ class ComputerList extends Component {
                 },
             }
 
+
+
     componentDidMount() {
-        this.getAll(this.state.page.page, this.state.page.limit);
+        this.getAll();
         this.getCount();
     };
 
-    getAll(page, limit) {
-        fetch(address+'page?limit='+limit+'&page='+page)
+    componentDidUpdate(){
+        this.getAll();
+    }
+
+    getAll() {
+        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
             .then(result => {
                 result.json().then(computers => {
-                    this.setState({ computers: computers }
-                    )
+                    this.setState({ computers: computers })
                 })
             })
-            .catch(error => console.error(error))
+            .catch(error => console.log(error))
     };
 
     getCount() {
@@ -53,7 +59,7 @@ class ComputerList extends Component {
     setPage = (newPage) => () =>{   
         this.setState({page: { ...this.state.page, page: newPage}})
         this.getAll(newPage, this.state.page.limit);
-            
+
     };
 
     setLimit = (event) => {
@@ -62,13 +68,14 @@ class ComputerList extends Component {
     };
 
 
-    delete = (id) => {
-        fetch(address + `${id}`,
+
+    delete = (id)  => {
+        fetch(address+`${id}`,
             {
                 method: "delete",
             }
-        ).then(() => { this.getAll() })
-    };
+        ).then(()=>{this.getAll(this.state.page.page, this.state.page.limit)})
+    }
 
     search = (name) => () => {
         fetch(address + 'Search?name=' + `${name}`)
@@ -105,7 +112,7 @@ class ComputerList extends Component {
                     <Row>
                         <Search onSearch={this.search} />
 
-                        <Table>
+                        <Table className="table">
                             <thead>
                                 <tr>
                                     <th>name</th>

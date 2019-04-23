@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 
+import DeletePopUp from "./DeletePopUp";
 import {Button} from "reactstrap";
 
-
 class ComputerDetail extends Component {
+
     state={
-    computer:this.props.computer,
-    computers: this.props.computers
+        computer:this.props.computer,
+        isDelete:!this.props.computer || false
     }
 
-    onDelete =() =>{
-      this.props.delete(this.props.computer.id)
+    toggleDelete= ()=>{
+        this.setState({isDelete:!this.state.isDelete});
     }
 
     render(){
@@ -23,10 +24,12 @@ class ComputerDetail extends Component {
               <td>{computer.introduced}</td>
               <td>{this.state.computer.discontinued}</td>
               <td>{this.state.computer.companyname}</td>
-              <td><Button onClick={this.onDelete}></Button></td>
+              <td>
+                  <Button color="danger" onClick={this.toggleDelete}>delete</Button>
+                  {this.state.isDelete &&<DeletePopUp computer={this.state.computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
+              </td>
           </tr>
       );
-
     }
 }
 
