@@ -6,24 +6,23 @@ import CompanyList from './Container/CompanyList';
 
 class App extends Component {
   state = {
-    PageMode: true
+    pageMode: true
   }
 
   togglePageMode = () => {
-    this.setState({ 
-      PageMode: !this.state.PageMode 
+    this.setState({
+      pageMode: !this.state.pageMode
     })
-}
+  }
 
 
   render() {
     return (
 
-        <div>
-              <NavBar onToggle = {this.togglePageMode}/>
-              { this.state.PageMode ? <ComputerList/> : <CompanyList/> }
-        </div>
-
+      <div>
+        <NavBar onToggle={this.togglePageMode} pageMode={this.state.pageMode} />
+        {this.state.pageMode ? <ComputerList /> : <CompanyList />}
+      </div>
 
     );
   }

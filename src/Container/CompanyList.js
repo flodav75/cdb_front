@@ -3,11 +3,7 @@ import React, { Component } from 'react';
 import CompanyDetail from '../Component/CompanyDetail';
 import { Table, Container, Row } from 'reactstrap';
 
-import { MOCK } from "../Mock";
-
-import "../App.css";
-
-const address = `http://10.0.1.70:8080/api/companies/`
+const address = 'http://10.0.1.70:8080/webapp/api/companies/'
 
 class CompanyList extends Component {
 
@@ -17,16 +13,22 @@ class CompanyList extends Component {
     this.getAll();
   }
 
-  getAll() {
-    this.setState({ companies: MOCK })
-  }
+  getAll(){
+    fetch(address)
+        .then(result => {
+            result.json().then(companies => {
+                this.setState({ companies: companies })
+            })
+        })
+        .catch(error => console.log(error))
+}
 
   render() {
     return (
       <div >
         <Container>
           <Row>
-            <Table className="table">
+            <Table>
               <thead>
                 <tr>
                   <th>id</th>
