@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ComputerDetail from '../Component/ComputerDetail';
+import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
 
 import { MOCK } from "../Mock";
@@ -10,7 +11,10 @@ import "../App.css";
 
 class ComputerList extends Component {
 
-    state = { computers: [] }
+    state = { computers: [],
+                FormMode: false,
+                UpdateMode: false
+                 }
 
     componentDidMount() {
         this.getAll();
@@ -32,10 +36,29 @@ class ComputerList extends Component {
             .catch(error => console.log(error))
     };
 
+    toggleFormAccess = () => (computer) =>  {
+        this.setState(prevState => ({
+          //computerFormAccess: !this.state.computerFormAccess,
+          FormMode: !prevState.FormMode,
+          UpdateMode: !prevState.UpdateMode,
+          computer: computer
+        }));
+        console.log(computer)
+    };
+
+    toggleAddFormAccess = () => {
+        this.setState({
+            //UpdateMode: !this.state.UpdateMode,
+            FormMode: !this.state.FormMode
+        })
+    }
+
     render() {
 
         return (
-            <div >
+            <div>
+                { !this.state.UpdateMode && <button class="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode}/> :
                 <Container>
 
                     <Row>
@@ -53,13 +76,14 @@ class ComputerList extends Component {
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} />
+                                        return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} />
                                     })
                                 }
                             </tbody>
                         </Table>
                     </Row>
                 </Container>
+            }
             </div>
 
         );
