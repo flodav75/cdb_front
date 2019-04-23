@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-
-import { Table, Container, Row } from 'reactstrap';
+import ComputerDetail from '../Component/ComputerDetail';
+import {Table, Container, Row} from 'reactstrap';
 
 import Search from "../Component/Search";
+import "../App.css";
 import Paging from "../Component/Paging";
-import ComputerDetail from '../Component/ComputerDetail';
-
 import "./ComputerList.scss";
 
 const address = 'http://10.0.1.70:8080/webapp/api/computers/'
@@ -14,12 +13,15 @@ class ComputerList extends Component {
 
     state = {
         computers: [],
+        isDelete: false,
         page: {
             limit: 15,
-            page: 1,            
+            page: 1,
         }
 
     }
+
+
 
     componentDidMount() {
         this.getAll();
@@ -50,7 +52,7 @@ class ComputerList extends Component {
             .catch(error => console.log(error))
     };
 
-    setPage = (newPage) => () =>{   
+    setPage = (newPage) => () =>{
         this.setState({
             page: { ...this.state.page, page: newPage}
         })
@@ -63,13 +65,14 @@ class ComputerList extends Component {
     };
 
 
-    delete = (id) => {
-        fetch(address + `${id}`,
+
+    delete = (id)  => {
+        fetch(address+`${id}`,
             {
                 method: "delete",
             }
-        ).then(() => { this.getAll() })
-    };
+        ).then(()=>{this.getAll()})
+    }
 
     search = (name) => () => {
         fetch(address + 'Search?name=' + `${name}`)
@@ -82,27 +85,27 @@ class ComputerList extends Component {
     };
 
     render() {
+
         return (
             <div >
                 <Container>
-
                     <Row>
                         <Search onSearch={this.search} />
 
-                        <Table>
+                        <Table className="table">
                             <thead>
                                 <tr>
                                     <th>name</th>
                                     <th>introduced</th>
                                     <th>discontinued</th>
                                     <th>company</th>
-                                    <th>delete</th>
+                                    <th> delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} delete={this.delete} />
+                                        return <ComputerDetail key={computer.id} computer={computer} delete={this.delete}/>
                                     })
                                 }
 
@@ -116,11 +119,9 @@ class ComputerList extends Component {
                 </Container>
             </div>
 
-
-
-        );
+      );
     }
-}
-
-export default ComputerList;
+  }
+  
+  export default ComputerList;
 
