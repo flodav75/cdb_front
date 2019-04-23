@@ -6,7 +6,7 @@ import Search from "../Component/Search";
 import Paging from "../Component/Paging";
 import ComputerDetail from '../Component/ComputerDetail';
 
-import "../App.css";
+import "./ComputerList.scss";
 
 const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
@@ -15,17 +15,19 @@ class ComputerList extends Component {
     state = {
         computers: [],
         page: {
-            limit: 20,
-            page: 2,
-            
-        },
-        count: 0
+            limit: 15,
+            page: 1,            
+        }
 
     }
 
     componentDidMount() {
         this.getAll();
         this.getCount();
+    };
+
+    componentDidUpdate(){
+        this.getAll();
     }
 
     getAll() {
@@ -36,7 +38,7 @@ class ComputerList extends Component {
                 })
             })
             .catch(error => console.log(error))
-    }
+    };
 
     getCount() {
         fetch(address+'count')
@@ -46,12 +48,19 @@ class ComputerList extends Component {
                 })
             })
             .catch(error => console.log(error))
-    }
+    };
 
-    setPage = () => (newPage) => () =>{
-        this.setState({page: { ...this.state.page, page: newPage}});
-        this.getAll();
-    }
+    setPage = (newPage) => () =>{   
+        this.setState({
+            page: { ...this.state.page, page: newPage}
+        })
+    };
+
+    handleChange = (event) => {
+        this.setState({
+            page: {...this.state.page, limit: event.target.value}
+        });
+    };
 
 
     delete = (id) => {
@@ -60,7 +69,7 @@ class ComputerList extends Component {
                 method: "delete",
             }
         ).then(() => { this.getAll() })
-    }
+    };
 
     search = (name) => () => {
         fetch(address + 'Search?name=' + `${name}`)
@@ -73,7 +82,6 @@ class ComputerList extends Component {
     };
 
     render() {
-
         return (
             <div >
                 <Container>
@@ -81,7 +89,7 @@ class ComputerList extends Component {
                     <Row>
                         <Search onSearch={this.search} />
 
-                        <Table className="table">
+                        <Table>
                             <thead>
                                 <tr>
                                     <th>name</th>
@@ -99,7 +107,7 @@ class ComputerList extends Component {
                                 }
 
                                 <tr>
-                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage()}/></td>
+                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.handleChange}/></td>
                                 </tr>
 
                             </tbody>
