@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import ComputerDetail from '../Component/ComputerDetail';
 import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
@@ -21,7 +20,7 @@ class ComputerList extends Component {
                 page: {
                     limit: 15,
                     page: 1,
-                    
+
                 },
             }
 
@@ -53,10 +52,10 @@ class ComputerList extends Component {
                     this.setState({ count: count })
                 })
             })
-            .catch(error => console.error(error))
+            .catch(error => console.log(error))
     };
 
-    setPage = (newPage) => () =>{   
+    setPage = (newPage) => () =>{
         this.setState({page: { ...this.state.page, page: newPage}})
         this.getAll(newPage, this.state.page.limit);
 
@@ -103,6 +102,7 @@ class ComputerList extends Component {
     }
 
     render() {
+
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
@@ -140,11 +140,9 @@ class ComputerList extends Component {
             }
             </div>
 
-
-
-        );
+      );
     }
-}
+  }
 
-export default ComputerList;
+  export default ComputerList;
 

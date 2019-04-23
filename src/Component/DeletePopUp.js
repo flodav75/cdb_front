@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import CompanyDetail from "./CompanyDetail";
 
 
 class DeletePopUp extends Component{
@@ -8,7 +7,7 @@ class DeletePopUp extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            computer:this.props.computer,
+            computers:this.props.computers,
             modal: true
 
         };
@@ -33,7 +32,16 @@ class DeletePopUp extends Component{
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Do you really want delete ?</ModalHeader>
                         <ModalBody>
-                            {this.state.computer.name}
+                            {
+                                this.state.computers.map(computer =>{
+                                   return <div>{computer.name} </div>;
+                                })
+                            }
+
+                                {this.state.computers[0].name}
+
+
+
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.onDelete}>Delete</Button>{' '}

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import DeletePopUp from "./DeletePopUp";
 import {Button} from "reactstrap";
 
+
 class ComputerDetail extends Component {
 
     state={
@@ -16,6 +17,7 @@ class ComputerDetail extends Component {
 
     render(){
         let { computer } = this.state;
+
       return (
           <tr>
               <td onClick={this.props.onToggle(this.state.computer)}>
@@ -30,6 +32,7 @@ class ComputerDetail extends Component {
               </td>
           </tr>
       );
+
     }
 }
 
