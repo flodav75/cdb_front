@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {Button} from "reactstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import { faTrash} from "@fortawesome/free-solid-svg-icons";
 
 class ComputerDetail extends Component {
     state={

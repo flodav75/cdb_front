@@ -18,26 +18,22 @@ class ComputerList extends Component {
             limit: 15,
             page: 1,            
         }
-
     }
 
     componentDidMount() {
-        this.getAll();
+        this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
     };
 
-    componentDidUpdate(){
-        this.getAll();
-    }
-
-    getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+    getAll(page, limit) {
+        fetch(address+'page?limit='+limit+'&page='+page)
             .then(result => {
                 result.json().then(computers => {
-                    this.setState({ computers: computers })
+                    this.setState({ computers: computers }
+                    )
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
     getCount() {
@@ -47,19 +43,18 @@ class ComputerList extends Component {
                     this.setState({ count: count })
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
     setPage = (newPage) => () =>{   
-        this.setState({
-            page: { ...this.state.page, page: newPage}
-        })
+        this.setState({page: { ...this.state.page, page: newPage}})
+        this.getAll(newPage, this.state.page.limit);
+            
     };
 
-    handleChange = (event) => {
-        this.setState({
-            page: {...this.state.page, limit: event.target.value}
-        });
+    setLimit = (event) => {
+        this.setState({page: {...this.state.page, limit: event.target.value}})
+        this.getAll(this.state.page.page, event.target.value);
     };
 
 
@@ -78,7 +73,7 @@ class ComputerList extends Component {
                     this.setState({ computers: computers })
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
     render() {
@@ -107,7 +102,7 @@ class ComputerList extends Component {
                                 }
 
                                 <tr>
-                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.handleChange}/></td>
+                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
 
                             </tbody>
