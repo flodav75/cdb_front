@@ -24,19 +24,13 @@ class ComputerList extends Component {
                 },
             }
 
-
-
     componentDidMount() {
-        this.getAll();
+        this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
     };
 
-    componentDidUpdate(){
-        this.getAll();
-    }
-
-    getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+    getAll(page, limit) {
+        fetch(address+'page?limit='+limit+'&page='+page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -139,7 +133,6 @@ class ComputerList extends Component {
                 </Container>
             }
             </div>
-
       );
     }
   }
