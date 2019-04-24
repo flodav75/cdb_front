@@ -33,7 +33,6 @@ class DeletePopUp extends Component{
                         <ModalHeader toggle={this.toggle}>Do you really want delete ?</ModalHeader>
                         <ModalBody>
                                 {this.state.computer.name}
-
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.onDelete}>Delete</Button>{' '}
