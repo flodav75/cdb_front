@@ -13,20 +13,22 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 class ComputerList extends Component {
 
     state = { computers: [],
-        computer: null,
-        FormMode: false,
-        UpdateMode: false,
-        page: {
-            limit: 15,
-            page: 1,
+              computer: null,
+                FormMode: false,
+                UpdateMode: false,
+                page: {
+                    limit: 15,
+                    page: 1,
 
-        },
-    }
+                },
+            }
+
 
     componentDidMount() {
         this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
     };
+
 
     onCancel = () => {
         this.setState({UpdateMode: !this.state.UpdateMode,
@@ -35,24 +37,17 @@ class ComputerList extends Component {
 
     getAll(page, limit) {
 
-        fetch(address+'page?limit='+limit+'&page='+page, {
+        fetch(address + 'page?limit=' + limit + '&page=' + page, {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Host': 'api.producthunt.com',
-                    'Authorization':sessionStorage.getItem('token')
-                }}
-
+                    'Authorization': sessionStorage.getItem('token')
+                }
+            }
         )
 
-            .then(result => {
-                result.json().then(computers => {
-                    this.setState({ computers: computers })
-                })
-            })
-            .catch(error => console.log(error))
-    };
-
+    }
     getCount() {
         fetch(address+'count'
 
@@ -142,7 +137,7 @@ class ComputerList extends Component {
                         <Row>
                             <Search onSearch={this.search} />
 
-                            <Table className="table">
+                            <Table >
                                 <thead>
                                 <tr>
                                     <th>name</th>
