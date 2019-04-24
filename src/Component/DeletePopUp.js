@@ -7,7 +7,7 @@ class DeletePopUp extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            computers:this.props.computers,
+            computer:this.props.computer,
             modal: true
 
         };
@@ -32,15 +32,7 @@ class DeletePopUp extends Component{
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Do you really want delete ?</ModalHeader>
                         <ModalBody>
-                            {
-                                this.state.computers.map(computer =>{
-                                   return <div>{computer.name} </div>;
-                                })
-                            }
-
-                                {this.state.computers[0].name}
-
-
+                                {this.state.computer.name}
 
                         </ModalBody>
                         <ModalFooter>
