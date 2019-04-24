@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
+import ComputerDetail from '../Component/ComputerDetail';
+import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
 
 import Search from "../Component/Search";
 import Paging from "../Component/Paging";
-import ComputerDetail from '../Component/ComputerDetail';
 
 import "./ComputerList.scss";
 
@@ -12,13 +13,16 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
-    state = {
-        computers: [],
-        page: {
-            limit: 15,
-            page: 1,            
-        }
-    }
+    state = { computers: [],
+              computer: null,
+                FormMode: false,
+                UpdateMode: false,
+                page: {
+                    limit: 15,
+                    page: 1,
+                    
+                },
+            }
 
     componentDidMount() {
         this.getAll(this.state.page.page, this.state.page.limit);
@@ -76,9 +80,26 @@ class ComputerList extends Component {
             .catch(error => console.error(error))
     };
 
+    toggleFormAccess = (computer) => () =>  {
+        this.setState(prevState => ({
+          computer: computer,
+          FormMode: !prevState.FormMode,
+          UpdateMode: !prevState.UpdateMode,
+        }));
+        console.log(this.state.computer)
+    };
+
+    toggleAddFormAccess = () => {
+        this.setState({
+            FormMode: !this.state.FormMode
+        })
+    }
+
     render() {
         return (
-            <div >
+            <div>
+                { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
                 <Container>
 
                     <Row>
@@ -97,7 +118,7 @@ class ComputerList extends Component {
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} delete={this.delete} />
+                                        return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
                                     })
                                 }
 
@@ -109,6 +130,7 @@ class ComputerList extends Component {
                         </Table>
                     </Row>
                 </Container>
+            }
             </div>
 
 
