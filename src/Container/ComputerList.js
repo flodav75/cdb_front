@@ -31,8 +31,8 @@ class ComputerList extends Component {
         this.getCount();
     };
 
-    getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+    getAll(page, limit) {
+        fetch(address+'page?limit='+limit+'&page='+page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
