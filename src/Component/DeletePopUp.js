@@ -10,15 +10,13 @@ class DeletePopUp extends Component{
         this.state = {
             computer:this.props.computer,
             modal: true
-
         };
+
         this.toggleDelete = this.toggleDelete.bind(this);
     }
 
     onDelete =() =>{
-        console.log("va delete");
         this.props.delete(this.props.computer.id);
-       // this.toggleDelete();
     }
 
 

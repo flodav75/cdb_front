@@ -6,15 +6,12 @@ import Search from "../Component/Search";
 import "../App.css";
 import Paging from "../Component/Paging";
 import "./ComputerList.scss";
-
 const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
     state = {
         computers: [],
-        //computersDelete:[],
-       // isDelete: false,
         page: {
             limit: 15,
             page: 1,
@@ -25,19 +22,6 @@ class ComputerList extends Component {
         this.getAll();
         this.getCount();
      };
-
-    // addComputerToDelete =()=> (computer)=> {
-    //     console.log("add"+computer.id);
-    //     //this.setState({computersDelete:[...this.state.computersDelete, computer]});
-    // }
-
-    // removeComputerToDelete = (computer)=>()=>{
-    //     console("remove"+computer.id);
-    //     var filtered = this.state.computersDelete.filter(function(value){
-    //         return value =! computer;
-    //     });
-    //   //  this.setState({computersDelete:filtered});
-    // }
 
     getAll() {
         fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
@@ -71,28 +55,14 @@ class ComputerList extends Component {
         });
     };
 
-    // clear=()=>{
-    //     this.setState({computersDelete:[]});
-    // }
 
-    // deleteComputers=()=>{
-    //     this.state.computersDelete.map(computer=>{
-    //         return this.delete(computer.id);
-    //     })
-    //     this.clear();
-    //     this.getAll();
-    // }
 
     delete = (id)  => {
-        console.log("dans la methode delete");
         fetch(address+`${id}`,
             {
                 method: "delete",
             }
-        ).then(
-            console.log("dans le then"),
-        this.getAll()
-        )
+        ).then(()=>{this.getAll()})
     }
 
     search = (name) => () => {
@@ -111,8 +81,7 @@ class ComputerList extends Component {
                 <Container>
                     <Row>
                         <Search onSearch={this.search} />
-                        {/*{this.state.computersDelete.length>0 && <Button color={"danger"} onClick={this.deleteComputers} >delete</Button>}*/}
-                        {/*{this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.clear} >clear</Button>}*/}
+
                         <Table className="table">
                             <thead>
                                 <tr>
