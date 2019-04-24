@@ -31,10 +31,6 @@ class ComputerList extends Component {
         this.getCount();
     };
 
-    componentDidUpdate(){
-        this.getAll();
-    }
-
     getAll() {
         fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
             .then(result => {
