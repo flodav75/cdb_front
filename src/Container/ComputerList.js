@@ -13,49 +13,31 @@ class ComputerList extends Component {
 
     state = {
         computers: [],
-        isDelete: false,
+        //computersDelete:[],
+       // isDelete: false,
         page: {
             limit: 15,
             page: 1,
         }
     }
 
-
-
-
-    componentDidMount() {
+     componentDidMount() {
         this.getAll();
         this.getCount();
-    };
+     };
 
-    componentDidUpdate(){
-        this.getAll();
-    }
+    // addComputerToDelete =()=> (computer)=> {
+    //     console.log("add"+computer.id);
+    //     //this.setState({computersDelete:[...this.state.computersDelete, computer]});
+    // }
 
-
-    addComputerToDelete = (computer)=>{
-        this.setState({computersDelete:[...this.state.computersDelete, computer]});
-    }
-
-    removeComputerToDelete = (computer)=>{
-        var filtered = this.state.computersDelete.filter(function(value){
-            return value =! computer;
-        });
-        this.setState({computersDelete:filtered});
-    }
-
-
-    addComputerToDelete = (computer)=>{
-        this.setState({computersDelete:[...this.state.computersDelete, computer]});
-    }
-
-    removeComputerToDelete = (computer)=>{
-        var filtered = this.state.computersDelete.filter(function(value){
-            return value =! computer;
-        });
-        this.setState({computersDelete:filtered});
-    }
-
+    // removeComputerToDelete = (computer)=>()=>{
+    //     console("remove"+computer.id);
+    //     var filtered = this.state.computersDelete.filter(function(value){
+    //         return value =! computer;
+    //     });
+    //   //  this.setState({computersDelete:filtered});
+    // }
 
     getAll() {
         fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
@@ -89,36 +71,27 @@ class ComputerList extends Component {
         });
     };
 
+    // clear=()=>{
+    //     this.setState({computersDelete:[]});
+    // }
 
-    clear=()=>{
-        this.setState({computersDelete:[]});
-    }
-
-    deleteComputers=()=>{
-        this.state.computersDelete.map(computer=>{
-            return this.delete(computer.id);
-        })
-        this.clear();
-        this.getAll();
-    }
-
-    clear=()=>{
-        this.setState({computersDelete:[]});
-    }
-
-    deleteComputers=()=>{
-        this.state.computersDelete.map(computer=>{
-            return this.delete(computer.id);
-        })
-        this.clear();
-        this.getAll();
-    }
+    // deleteComputers=()=>{
+    //     this.state.computersDelete.map(computer=>{
+    //         return this.delete(computer.id);
+    //     })
+    //     this.clear();
+    //     this.getAll();
+    // }
 
     delete = (id)  => {
+        console.log("dans la methode delete");
         fetch(address+`${id}`,
             {
                 method: "delete",
             }
+        ).then(
+            console.log("dans le then"),
+        this.getAll()
         )
     }
 
@@ -138,8 +111,8 @@ class ComputerList extends Component {
                 <Container>
                     <Row>
                         <Search onSearch={this.search} />
-                        {this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.deleteComputers} >delete</Button>}
-                        {this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.clear} >clear</Button>}
+                        {/*{this.state.computersDelete.length>0 && <Button color={"danger"} onClick={this.deleteComputers} >delete</Button>}*/}
+                        {/*{this.state.computersDelete.length>0 && <Button variant="outline-warning" onClick={this.clear} >clear</Button>}*/}
                         <Table className="table">
                             <thead>
                                 <tr>
@@ -148,21 +121,19 @@ class ComputerList extends Component {
                                     <th>discontinued</th>
                                     <th>company</th>
                                     <th>
-                                        {<Button variant="outline-warning" >Edit</Button>}
+                                       delete
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} removeToDelete={this.removeComputerToDelete} addToDelete={this.addComputerToDelete} delete={this.delete}/>
+                                        return <ComputerDetail key={computer.id} computer={computer}  delete={this.delete}/>
                                     })
                                 }
-
                                 <tr>
                                     <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.handleChange}/></td>
                                 </tr>
-
                             </tbody>
                         </Table>
                     </Row>

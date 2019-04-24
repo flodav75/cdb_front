@@ -2,65 +2,38 @@ import React, { Component } from 'react';
 import {Input, Label} from "reactstrap";
 
 class SelectComputer extends Component{
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         isChecked: true,
-    //     };
-    // }
-    // toggleChange = () => {
-    //     this.setState({
-    //         isChecked: !this.state.isChecked,
-    //     });
-    // }
-    // render() {
-    //     return (
-    //         <label>
-    //             <input type="checkbox"
-    //                    checked={this.state.isChecked}
-    //                    onChange={this.toggleChange}
-    //             />
-    //             Check Me!
-    //         </label>
-    //     );
-    // }
 
     state ={
-        isChecked: false,
+        isChecked: true,
         computer: this.props.computer
     }
 
-    // componentDidUpdate() {
-    //     this.addOrRemove();
-    // }
+     componentWillUpdate() {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // this.addOrRemove();
+     }
 
+    addOrRemove=()=>{
+      //  console.log(this.state.isChecked)
 
-    addOrRemove(){
-
-        if(this.state.isChecked){
-            console.log("bonjour")
+        this.setState(prevState => ({
+            isChecked: !prevState.isChecked
+        }));
+      //  console.log(this.state.isChecked)
+       // if(this.state.isChecked == true){
+          //  console.log("aaaatrue");
              this.props.addToDelete(this.state.computer);
-        }else{
-            console.log("aurevoir")
-            this.props.removeToDelete(this.state.computer);
-        }
-
+       // }else{
+       //     console.log("aaaafalse");
+       //     this.props.removeToDelete(this.state.computer);
+      //  }
     }
-
-    toggleChange=()=>{
-        this.props.addToDelete(this.state.computer);
-
-      ///  this.setState({isChecked:!this.state.isChecked})
-    }
-
 
     render(){
         return(
             <div>
                 <Label check>
-
-                    <Input type="checkbox"  onClick={this.toggleChange}  />{' '}
-
+                    <Input type="checkbox"  onClick={this.addOrRemove}  />{' '}
                 </Label>
             </div>
         );
