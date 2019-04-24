@@ -23,6 +23,14 @@ class CompanyList extends Component {
         .catch(error => console.log(error))
   }
 
+  delete = (id) => () => {
+    fetch(address + `${id}`,
+        {
+            method: "delete",
+        }
+    ).then(() => { this.getAll() })
+};
+
   render() {
     return (
       <div >
@@ -33,12 +41,13 @@ class CompanyList extends Component {
                 <tr>
                   <th>id</th>
                   <th>name</th>
+                  <th>delete</th>
                 </tr>
               </thead>
               <tbody>
                 {
                   this.state.companies.map(company => {
-                    return <CompanyDetail key={company.id} company={company} />
+                    return <CompanyDetail key={company.id} company={company} delete={this.delete}/>
                   })
                 }
               </tbody>

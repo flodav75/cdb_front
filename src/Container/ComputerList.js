@@ -73,8 +73,8 @@ class ComputerList extends Component {
             {
                 method: "delete",
             }
-        ).then(()=>{this.getAll(this.state.page.page, this.state.page.limit)})
-    }
+        ).then(() => { this.getAll(this.state.page.page, this.state.page.limit) })
+    };
 
     search = (name) => () => {
         fetch(address + 'Search?name=' + `${name}`)
