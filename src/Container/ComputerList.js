@@ -15,7 +15,6 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 class ComputerList extends Component {
 
     state = { computers: [],
-              computer: null,
                 FormMode: false,
                 UpdateMode: false,
                 page: {
@@ -32,12 +31,12 @@ class ComputerList extends Component {
         this.getCount();
     };
 
-    componentDidUpdate(){
+    /*componentDidUpdate(){
         this.getAll();
-    }
+    }*/
 
     getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+        fetch(address/*+'page?limit='+this.state.page.limit+'&page='+this.state.page.page*/)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -94,7 +93,6 @@ class ComputerList extends Component {
           FormMode: !prevState.FormMode,
           UpdateMode: !prevState.UpdateMode,
         }));
-        console.log(this.state.computer)
     };
 
     toggleAddFormAccess = () => {
@@ -107,8 +105,8 @@ class ComputerList extends Component {
     render() {
         return (
             <div>
-                { !this.state.UpdateMode && <button class="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
+                { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
                 <Container>
 
                     <Row>
