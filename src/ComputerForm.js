@@ -32,17 +32,15 @@ getAllCompanies(){
   .catch(error => console.log(error))
 }
 
-
-
 getComputerById(id) {
-fetch('http://10.0.1.70:8080/webapp/api/computers/'+{id})
-.then(result => {
-result.json()
-.then(computer => {
-this.setState({computer : computer})
-})
-})
-.catch(error => console.log(error))
+  fetch('http://10.0.1.70:8080/webapp/api/computers/'+{id})
+  .then(result => {
+      result.json()
+      .then(computer => {
+          this.setState({computer : computer})
+      })
+  })
+  .catch(error => console.log(error))
 }
 
 update = (computer) => () => {

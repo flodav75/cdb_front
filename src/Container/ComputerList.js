@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import ComputerDetail from '../Component/ComputerDetail';
 import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
@@ -20,7 +19,7 @@ class ComputerList extends Component {
                 page: {
                     limit: 15,
                     page: 1,
-                    
+
                 },
             }
 
@@ -36,8 +35,8 @@ class ComputerList extends Component {
           FormMode: !this.state.FormMode})
       }
 
-    getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+    getAll(page, limit) {
+        fetch(address+'page?limit='+limit+'&page='+page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -56,25 +55,25 @@ class ComputerList extends Component {
             .catch(error => console.log(error))
     };
 
-    setPage = (newPage) => () =>{   
-        this.setState({
-            page: { ...this.state.page, page: newPage}
-        })
+    setPage = (newPage) => () =>{
+        this.setState({page: { ...this.state.page, page: newPage}})
+        this.getAll(newPage, this.state.page.limit);
+
     };
 
-    handleChange = (event) => {
-        this.setState({
-            page: {...this.state.page, limit: event.target.value}
-        });
+    setLimit = (event) => {
+        this.setState({page: {...this.state.page, limit: event.target.value}})
+        this.getAll(this.state.page.page, event.target.value);
     };
 
 
-    delete = (id) => {
-        fetch(address + `${id}`,
+
+    delete = (id)  => {
+        fetch(address+`${id}`,
             {
                 method: "delete",
             }
-        ).then(() => { this.getAll() })
+        ).then(() => { this.getAll(this.state.page.page, this.state.page.limit) })
     };
 
     search = (name) => () => {
@@ -84,7 +83,7 @@ class ComputerList extends Component {
                     this.setState({ computers: computers })
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
     toggleFormAccess = (computer) => () =>  {
@@ -103,6 +102,7 @@ class ComputerList extends Component {
     }
 
     render() {
+
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
@@ -112,7 +112,7 @@ class ComputerList extends Component {
                     <Row>
                         <Search onSearch={this.search} />
 
-                        <Table>
+                        <Table className="table">
                             <thead>
                                 <tr>
                                     <th>name</th>
@@ -130,7 +130,7 @@ class ComputerList extends Component {
                                 }
 
                                 <tr>
-                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.handleChange}/></td>
+                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
 
                             </tbody>
@@ -140,11 +140,9 @@ class ComputerList extends Component {
             }
             </div>
 
-
-
-        );
+      );
     }
-}
+  }
 
-export default ComputerList;
+  export default ComputerList;
 

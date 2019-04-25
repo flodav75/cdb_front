@@ -43,27 +43,27 @@ class Paging extends Component {
                                     </PaginationLink>
                                 </PaginationItem>
 
-                            {page.page + 1 < Math.floor(this.props.count / page.limit) && 
+                            {page.page + 1 < Math.floor(this.props.count / page.limit)+2 && 
                                 <PaginationItem>
                                     <PaginationLink onClick={this.props.onSetPage(page.page + 1)} >
                                         {page.page + 1}
                                     </PaginationLink>
                                 </PaginationItem>}
 
-                            {page.page + 2 < Math.floor(this.props.count / page.limit) &&
+                            {page.page + 2 < Math.floor(this.props.count / page.limit)+2 &&
                                 <PaginationItem>
                                     <PaginationLink onClick={this.props.onSetPage(page.page + 2)}>
                                         {page.page + 2}
                                     </PaginationLink>
                                 </PaginationItem>}
-                            {page.page + 1 < Math.floor(this.props.count / page.limit) &&
+                            {page.page + 1 < Math.floor(this.props.count / page.limit)+2 &&
                                 <PaginationItem>
                                     <PaginationLink next onClick={this.props.onSetPage(page.page + 1)} />
                                 </PaginationItem>}
 
-                            {page.page + 1 < Math.floor(this.props.count / page.limit) &&
+                            {page.page + 1 < Math.floor(this.props.count / page.limit)+2 &&
                                 <PaginationItem>
-                                    <PaginationLink last onClick={this.props.onSetPage(Math.floor(this.props.count / page.limit))} />
+                                    <PaginationLink last onClick={this.props.onSetPage(Math.floor(this.props.count / page.limit +1))} />
                                 </PaginationItem>}
                         </Pagination>
                     </div>
@@ -77,7 +77,7 @@ class Paging extends Component {
                             <option value="50">50</option>
                         </select>
             
-                        {page.limit * (page.page - 1) + 1} - {page.limit*(page.page)} of {this.props.count}
+                        {page.limit * (page.page - 1) + 1} - {page.limit*(page.page)<this.props.count?page.limit*(page.page):this.props.count} of {this.props.count}
                     </div>
                 </div>   
             </div>
