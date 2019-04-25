@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import DeletePopUp from "./DeletePopUp";
 import {Button} from "reactstrap";
+
+
 class ComputerDetail extends Component {
 
     state={
@@ -15,19 +17,22 @@ class ComputerDetail extends Component {
 
     render(){
         let { computer } = this.state;
-        return (
-            <tr>
-                <td>{computer.name}</td>
-                <td>{computer.introduced}</td>
-                <td>{computer.discontinued}</td>
-                <td>{computer.companyname}</td>
-                <td>
-                    <Button color="danger" onClick={this.toggleDelete}>delete</Button>
-                    {this.state.isDelete &&<DeletePopUp computer={this.state.computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
-                </td>
-            </tr>
 
-        );
+      return (
+          <tr>
+              <td onClick={this.props.onToggle(this.state.computer)}>
+                {this.state.computer.name}
+              </td>
+              <td>{computer.introduced}</td>
+              <td>{this.state.computer.discontinued}</td>
+              <td>{this.state.computer.companyname}</td>
+              <td>
+                  <Button color="danger" onClick={this.toggleDelete}>delete</Button>
+                  {this.state.isDelete &&<DeletePopUp computer={this.state.computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
+              </td>
+          </tr>
+      );
+
     }
 }
 

@@ -1,30 +1,36 @@
 import React, { Component } from 'react';
 import ComputerDetail from '../Component/ComputerDetail';
-import {Table, Container, Row, Button} from 'reactstrap';
+import ComputerForm from '../ComputerForm';
+import { Table, Container, Row } from 'reactstrap';
+
 
 import Search from "../Component/Search";
-import "../App.css";
 import Paging from "../Component/Paging";
+
 import "./ComputerList.scss";
+
 const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 
 class ComputerList extends Component {
 
-    state = {
-        computers: [],
-        page: {
-            limit: 15,
-            page: 1,
-        }
-    }
+    state = { computers: [],
+              computer: null,
+                FormMode: false,
+                UpdateMode: false,
+                page: {
+                    limit: 15,
+                    page: 1,
 
-     componentDidMount() {
-        this.getAll();
+                },
+            }
+
+    componentDidMount() {
+        this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
-     };
+    };
 
-    getAll() {
-        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
+    getAll(page, limit) {
+        fetch(address+'page?limit='+limit+'&page='+page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -44,15 +50,14 @@ class ComputerList extends Component {
     };
 
     setPage = (newPage) => () =>{
-        this.setState({
-            page: { ...this.state.page, page: newPage}
-        })
+        this.setState({page: { ...this.state.page, page: newPage}})
+        this.getAll(newPage, this.state.page.limit);
+
     };
 
-    handleChange = (event) => {
-        this.setState({
-            page: {...this.state.page, limit: event.target.value}
-        });
+    setLimit = (event) => {
+        this.setState({page: {...this.state.page, limit: event.target.value}})
+        this.getAll(this.state.page.page, event.target.value);
     };
 
 
@@ -62,23 +67,42 @@ class ComputerList extends Component {
             {
                 method: "delete",
             }
-        ).then(()=>{this.getAll()})
+        ).then(()=>{this.getAll(this.state.page.page, this.state.page.limit)})
     }
 
     search = (name) => () => {
-        fetch(address+'Search?name='+`${name}`)
+        fetch(address + 'Search?name=' + `${name}`)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
+    toggleFormAccess = (computer) => () =>  {
+        this.setState(prevState => ({
+          computer: computer,
+          FormMode: !prevState.FormMode,
+          UpdateMode: !prevState.UpdateMode,
+        }));
+        console.log(this.state.computer)
+    };
+
+    toggleAddFormAccess = () => {
+        this.setState({
+            FormMode: !this.state.FormMode
+        })
+    }
+
     render() {
+
         return (
-            <div >
+            <div>
+                { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
                 <Container>
+
                     <Row>
                         <Search onSearch={this.search} />
 
@@ -89,29 +113,29 @@ class ComputerList extends Component {
                                     <th>introduced</th>
                                     <th>discontinued</th>
                                     <th>company</th>
-                                    <th>
-                                       delete
-                                    </th>
+                                    <th>delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer}  delete={this.delete}/>
+                                        return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
                                     })
                                 }
+
                                 <tr>
-                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.handleChange}/></td>
+                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
+
                             </tbody>
                         </Table>
                     </Row>
                 </Container>
+            }
             </div>
-
       );
     }
   }
-  
+
   export default ComputerList;
 
