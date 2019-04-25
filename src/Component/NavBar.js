@@ -39,7 +39,7 @@ class NavBar extends Component {
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
-                  Welcome, User
+                  Welcome to computer data base
                 </DropdownToggle>
                 <DropdownMenu right>
 
@@ -48,9 +48,6 @@ class NavBar extends Component {
                     Logout
                   </DropdownItem>
                   <DropdownItem divider />
-                  <DropdownItem onClick={this.props.onCreateUser}>
-                    Login
-                  </DropdownItem>
 
                 </DropdownMenu>
               </UncontrolledDropdown>
