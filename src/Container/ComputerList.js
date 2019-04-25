@@ -30,13 +30,13 @@ class ComputerList extends Component {
         this.getCount();
     };
 
-    onCancel = () => {
+    sendBack = () => {
         this.setState({UpdateMode: !this.state.UpdateMode,
-          FormMode: !this.state.FormMode})
-      }
+            FormMode: !this.state.FormMode})
+    }
 
     getAll(page, limit) {
-        fetch(address+'page?limit='+limit+'&page='+page)
+        fetch(address/*+'page?limit='+limit+'&page='+page*/)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -105,14 +105,13 @@ class ComputerList extends Component {
 
         return (
             <div>
-                { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
                 <Container>
 
                     <Row>
                         <Search onSearch={this.search} />
-
-                        <Table className="table">
+                        { !this.state.FormMode && <button className="btn btn-success float-right" onClick={this.toggleAddFormAccess} >add</button> }
+                        <Table>
                             <thead>
                                 <tr>
                                     <th>name</th>
