@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './App.scss';
 
 import {faPen, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
-import {Card,  CardBody, Col, Input} from 'reactstrap';
+import {Card, CardBody, Col, Input} from 'reactstrap';
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Select from 'react-select'
 const addressCompany = 'http://10.0.1.70:8080/webapp/api/companies/'
@@ -11,7 +11,7 @@ const addressCompany = 'http://10.0.1.70:8080/webapp/api/companies/'
 class ComputerForm extends Component {
 
     state = {
-        computer: this.props.computer,    
+        computer: this.props.computer,
         UpdateMode: this.props.UpdateMode,
         computers: this.props.computers,
         FormMode: this.props.FormMode,

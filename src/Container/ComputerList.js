@@ -60,6 +60,7 @@ class ComputerList extends Component {
 
     getCount() {
         fetch(address+'count'
+
             , {
                 headers: {
                     'Accept': 'application/json',
@@ -90,7 +91,6 @@ class ComputerList extends Component {
         this.setState({page: {...this.state.page, limit: event.target.value}})
         this.getAll(this.state.page.page, event.target.value);
     };
-
 
 
     delete = (id)  => {
@@ -174,7 +174,7 @@ class ComputerList extends Component {
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
 
                     <Row>
@@ -182,37 +182,37 @@ class ComputerList extends Component {
 
                         <Table>
                             <thead>
-                                <tr>
-                                    <th  className="name">
-                                            name
-                                            <FontAwesomeIcon class={'myButton'} onClick={this.toggleSort(this.state.page.page,'name','ASC')}  icon={faSortAlphaUp}/>
-                                            <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(this.state.page.page,'name','DESC')}/>
-                                    </th>
-                                    <th  className="introduced">
-                                            introduced
-                                            <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(this.state.page.page,'introduced','ASC')}/>
-                                            <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown}  onClick={this.toggleSort(this.state.page.page,'introduced','DESC')}/>
-                                    </th>
-                                    <th  className="discontinued">discontinued
-                                        <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(this.state.page.page,'discontinued','ASC')} />
-                                         <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(this.state.page.page,'discontinued','DESC')}/>
-                                    </th>
-                                    <th  className="company">company
-                                        <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')}/>
-                                         <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')} />
-                                    </th>
-                                    <th  className="delete">delete</th>
-                                </tr>
+                            <tr>
+                                <th  className="name">
+                                    name
+                                    <FontAwesomeIcon class={'myButton'} onClick={this.toggleSort(this.state.page.page,'name','ASC')}  icon={faSortAlphaUp}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(this.state.page.page,'name','DESC')}/>
+                                </th>
+                                <th  className="introduced">
+                                    introduced
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(this.state.page.page,'introduced','ASC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown}  onClick={this.toggleSort(this.state.page.page,'introduced','DESC')}/>
+                                </th>
+                                <th  className="discontinued">discontinued
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(this.state.page.page,'discontinued','ASC')} />
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(this.state.page.page,'discontinued','DESC')}/>
+                                </th>
+                                <th  className="company">company
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')} />
+                                </th>
+                                <th  className="delete">delete</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                {
-                                    this.state.computers.map(computer => {
-                                        return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
-                                    })
-                                }
-                                <tr>
-                                    <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
-                                </tr>
+                            {
+                                this.state.computers.map(computer => {
+                                    return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
+                                })
+                            }
+                            <tr>
+                                <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
+                            </tr>
                             </tbody>
                         </Table>
                     </Row>
