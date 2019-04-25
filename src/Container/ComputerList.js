@@ -14,7 +14,6 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 class ComputerList extends Component {
 
     state = { computers: [],
-              computer: null,
                 FormMode: false,
                 UpdateMode: false,
                 page: {
@@ -28,6 +27,11 @@ class ComputerList extends Component {
         this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
     };
+
+    onCancel = () => {
+        this.setState({UpdateMode: !this.state.UpdateMode,
+          FormMode: !this.state.FormMode})
+      }
 
     getAll(page, limit) {
         fetch(address+'page?limit='+limit+'&page='+page)
@@ -86,11 +90,11 @@ class ComputerList extends Component {
           FormMode: !prevState.FormMode,
           UpdateMode: !prevState.UpdateMode,
         }));
-        console.log(this.state.computer)
     };
 
     toggleAddFormAccess = () => {
         this.setState({
+            UpdateMode: false,
             FormMode: !this.state.FormMode
         })
     }
@@ -100,7 +104,7 @@ class ComputerList extends Component {
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
 
                     <Row>
