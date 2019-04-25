@@ -16,6 +16,9 @@ class DeletePopUp extends Component{
 
     onDelete =() =>{
         this.props.delete(this.props.computer.id);
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
     }
 
     toggle() {

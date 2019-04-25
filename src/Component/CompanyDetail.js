@@ -15,7 +15,6 @@ class CompanyDetail extends Component {
                 <td>{company.name}</td>
                 <td><Button onClick={this.props.delete(company.id)}></Button></td>
             </tr>
-  
       );
     }
   }

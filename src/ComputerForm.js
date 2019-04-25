@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './App.css';
+import './App.scss';
 
 import {faPen, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Card, CardBody, Col, Input, Container, Row} from 'reactstrap';

@@ -16,8 +16,13 @@ import {
 import "./Navbar.scss"
 
 class NavBar extends Component {
-  state = {
-    isOpen: false
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
   }
 
   toggle() {
@@ -42,18 +47,22 @@ class NavBar extends Component {
                   Welcome, User
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
-                    See account
-                  </DropdownItem>
+
                   <DropdownItem divider />
-                  <DropdownItem>
+                  <DropdownItem onClick={this.props.onLogout}>
                     Logout
                   </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={this.props.onCreateUser}>
+                    Login
+                  </DropdownItem>
+
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
+
       </div>
 
     );
