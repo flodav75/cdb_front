@@ -24,10 +24,8 @@ class ComputerList extends Component {
                 },
             }
 
-
-
     componentDidMount() {
-        this.getAll();
+        this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
     };
 

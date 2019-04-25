@@ -43,10 +43,6 @@ class NavBar extends Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    See account
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
                     Logout
                   </DropdownItem>
                 </DropdownMenu>
