@@ -3,7 +3,6 @@ import ComputerDetail from '../Component/ComputerDetail';
 import ComputerForm from '../ComputerForm';
 import { Table, Container, Row } from 'reactstrap';
 
-
 import Search from "../Component/Search";
 import Paging from "../Component/Paging";
 
@@ -100,7 +99,7 @@ class ComputerList extends Component {
     };
 
     search = (name) => () => {
-        fetch(address + 'Search?name=' + `${name}`,
+        fetch(address + 'Search?name=' + name,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -137,7 +136,7 @@ class ComputerList extends Component {
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
 
                         <Row>

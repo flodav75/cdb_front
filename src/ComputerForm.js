@@ -46,7 +46,7 @@ getComputerById(id) {
 update = (computer) => () => {
 this.setState({id: this.state.computer.id})
 console.log(computer)
-fetch('http://10.0.1.70:8080/webapp/api/computers/'+`${this.state.computer.id}`,
+fetch('http://10.0.1.70:8080/webapp/api/computers/'+this.state.computer.id,
 {
 method: "PUT",
 headers : {"Content-Type" : "application/json"},
