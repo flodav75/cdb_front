@@ -14,14 +14,15 @@ const address = 'http://10.0.1.70:8080/webapp/api/computers/'
 class ComputerList extends Component {
 
     state = { computers: [],
-                FormMode: false,
-                UpdateMode: false,
-                page: {
-                    limit: 15,
-                    page: 1,
+        computer: null,
+        FormMode: false,
+        UpdateMode: false,
+        page: {
+            limit: 15,
+            page: 1,
 
-                },
-            }
+        },
+    }
 
     componentDidMount() {
         this.getAll(this.state.page.page, this.state.page.limit);
@@ -34,7 +35,17 @@ class ComputerList extends Component {
       }
 
     getAll(page, limit) {
-        fetch(address+'page?limit='+limit+'&page='+page)
+
+        fetch(address+'page?limit='+limit+'&page='+page, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }}
+
+        )
+
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -44,7 +55,15 @@ class ComputerList extends Component {
     };
 
     getCount() {
-        fetch(address+'count')
+        fetch(address+'count'
+
+            , {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }})
             .then(result => {
                 result.json().then(count => {
                     this.setState({ count: count })
@@ -65,17 +84,30 @@ class ComputerList extends Component {
     };
 
 
-
     delete = (id)  => {
         fetch(address+`${id}`,
             {
                 method: "delete",
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }
             }
         ).then(() => { this.getAll(this.state.page.page, this.state.page.limit) })
     };
 
     search = (name) => () => {
-        fetch(address + 'Search?name=' + `${name}`)
+        fetch(address + 'Search?name=' + `${name}`,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }})
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -86,10 +118,11 @@ class ComputerList extends Component {
 
     toggleFormAccess = (computer) => () =>  {
         this.setState(prevState => ({
-          computer: computer,
-          FormMode: !prevState.FormMode,
-          UpdateMode: !prevState.UpdateMode,
+            computer: computer,
+            FormMode: !prevState.FormMode,
+            UpdateMode: !prevState.UpdateMode,
         }));
+        console.log(this.state.computer)
     };
 
     toggleAddFormAccess = () => {
@@ -107,11 +140,11 @@ class ComputerList extends Component {
             { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
 
-                    <Row>
-                        <Search onSearch={this.search} />
+                        <Row>
+                            <Search onSearch={this.search} />
 
-                        <Table className="table">
-                            <thead>
+                            <Table className="table">
+                                <thead>
                                 <tr>
                                     <th>name</th>
                                     <th>introduced</th>
@@ -119,8 +152,8 @@ class ComputerList extends Component {
                                     <th>company</th>
                                     <th>delete</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 {
                                     this.state.computers.map(computer => {
                                         return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
@@ -131,16 +164,16 @@ class ComputerList extends Component {
                                     <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
 
-                            </tbody>
-                        </Table>
-                    </Row>
-                </Container>
-            }
+                                </tbody>
+                            </Table>
+                        </Row>
+                    </Container>
+                }
             </div>
 
-      );
+        );
     }
-  }
+}
 
-  export default ComputerList;
+export default ComputerList;
 

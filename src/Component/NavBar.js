@@ -42,14 +42,22 @@ class NavBar extends Component {
                   Welcome, User
                 </DropdownToggle>
                 <DropdownMenu right>
-                  <DropdownItem>
+
+                  <DropdownItem divider />
+                  <DropdownItem onClick={this.props.onLogout}>
                     Logout
                   </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem onClick={this.props.onCreateUser}>
+                    Login
+                  </DropdownItem>
+
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
         </Navbar>
+
       </div>
 
     );
