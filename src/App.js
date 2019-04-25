@@ -14,6 +14,15 @@ class App extends Component {
 
     }
 
+    componentWillMount() {
+        if (sessionStorage.getItem('token')===null) {
+
+            //this.props.history.push('/');
+        } else {
+           this.setState({formUser: false})
+        }
+    }
+
     togglePageMode = () => {
         this.setState({
             pageMode: !this.state.pageMode
@@ -31,7 +40,7 @@ class App extends Component {
     logout=()=>{
         sessionStorage.clear();
         this.setState({
-            formUser: !this.state.formUser
+            formUser: true
         });
 
 
@@ -97,8 +106,7 @@ class App extends Component {
 
             <div>
                 <NavBar onCreateUser={this.toggleUser} onLogout={this.logout} onToggle={this.togglePageMode} pageMode={this.state.pageMode} />
-                {
-                    this.state.formUser ? <ComputerUser onLogin={this.login}  onRegister={this.register}/> : this.state.pageMode ? <ComputerList /> : <CompanyList />}
+                {this.state.formUser ? <ComputerUser onLogin={this.login}  onRegister={this.register}/> : this.state.pageMode ? <ComputerList /> : <CompanyList />}
             </div>
 
 

@@ -58,16 +58,65 @@ class ComputerUser extends Component {
 
 
     onLogin=()=>{
+        let correct=true;
+        let incorrect;
 
-        this.props.onLogin(this.state.user);
+
+        if (this.state.user.login===""){
+            incorrect="\n login "
+            correct=false;
+        }
+        if (this.state.user.password===""){
+            incorrect=incorrect+"\n password "
+            correct=false;
+        }
+
+        if(correct===true) {
+            this.props.onLogin(this.state.user);
+
+        }else{
+            alert("Le ou les champs: " + incorrect + "\nsont vides ou incorrects")
+        }
+
+
     }
 
     onRegister=()=>{
+        var regex ="/^(([^<>()[\\]\\\\.,;:\\s@\\\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\\\"]+)*)|(\\\".+\\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/;"
+        let correct=true;
+        let incorrect;
 
-        this.props.onRegister(this.state.user);
-        this.setState({
-            RegisterMode: !this.state.RegisterMode
-        });
+        if (this.state.user.email==="" || !+
+            regex.match(this.state.user.email)){
+            incorrect="\n email "
+            correct=false;
+        }
+        if (this.state.user.login===""){
+            incorrect=incorrect+"\n login "
+            correct=false;
+        }
+        if (this.state.user.password===""){
+            incorrect=incorrect+"\n password "
+            correct=false;
+        }
+        if (this.state.user.firstname===""){
+            incorrect=incorrect+"\n firstname "
+            correct=false;
+        }
+        if (this.state.user.lastname===""){
+            incorrect=incorrect+"\n lastname"
+            correct=false;
+        }
+
+        if(correct===true) {
+            this.props.onRegister(this.state.user);
+            this.setState({
+                RegisterMode: !this.state.RegisterMode
+            });
+        }else{
+            alert("Le ou les champs: " + incorrect + "\nsont vides ou incorrects")
+        }
+
 
     }
 
@@ -97,7 +146,7 @@ class ComputerUser extends Component {
 
                                         </div>
 
-                                    <div>
+                                    <div className='divUser'>
                                         <button className='ghost-round full-width' onClick={this.state.RegisterMode? this.onRegister:this.onLogin}>{this.state.RegisterMode?"Create Account":"Login"}</button>
                                         <button className='ghost-round full-width' onClick={this.toggleRegister}> {this.state.RegisterMode ? "Login":"Create Account"}</button>
                                     </div>
