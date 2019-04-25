@@ -70,13 +70,11 @@ class Paging extends Component {
 
                     <div className="text-right, col-sm-4">
                         Computers per page:
-
                         <select onChange={this.props.change} name={page.limit}>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="50">50</option>
                         </select>
-            
                         {page.limit * (page.page - 1) + 1} - {page.limit*(page.page)<this.props.count?page.limit*(page.page):this.props.count} of {this.props.count}
                     </div>
                 </div>   

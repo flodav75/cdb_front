@@ -7,6 +7,7 @@ import ComputerUser from "./Component/ComputerUser";
 const  loginAddress= `http://10.0.1.70:8080/webapp/api/users/`
 
 class App extends Component {
+
     state={
         formUser : true,
         pageMode: true
@@ -99,9 +100,6 @@ class App extends Component {
             });
 
     };
-
-
-
 
     render() {
         return (

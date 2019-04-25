@@ -16,8 +16,13 @@ import {
 import "./Navbar.scss"
 
 class NavBar extends Component {
-  state = {
-    isOpen: false
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      isOpen: false
+    };
   }
 
   toggle() {
