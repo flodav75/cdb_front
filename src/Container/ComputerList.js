@@ -26,27 +26,47 @@ class ComputerList extends Component {
                 page: {
                     limit: 15,
                     page: 1,
+
                 },
             }
+
 
     componentDidMount() {
         this.getAll(this.state.page.page, this.state.page.limit);
         this.getCount();
+    }
 
-    };
+    onCancel = () => {
+        this.setState({UpdateMode: !this.state.UpdateMode,
+          FormMode: !this.state.FormMode})
+      }
 
     getAll(page, limit) {
-        fetch(address+'page?limit='+limit+'&page='+page)
-            .then(result => {
-                result.json().then(computers => {
-                    this.setState({ computers: computers })
-                })
+        fetch(address + 'page?limit=' + limit + '&page=' + page, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization': sessionStorage.getItem('token')
+                }
+            }
+        ).then(result => {
+            result.json().then(computers => {
+                this.setState({ computers: computers })
             })
+        })
             .catch(error => console.log(error))
-    };
+    }
 
     getCount() {
-        fetch(address+'count')
+        fetch(address+'count'
+            , {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }})
             .then(result => {
                 result.json().then(count => {
                     this.setState({ count: count })
@@ -71,10 +91,19 @@ class ComputerList extends Component {
         this.getAll(this.state.page.page, event.target.value);
     };
 
+
+
     delete = (id)  => {
         fetch(address+`${id}`,
             {
                 method: "delete",
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }
             }
         ).then(()=>{
             console.log("fin")
@@ -83,7 +112,14 @@ class ComputerList extends Component {
     }
 
     search = (name) => () => {
-        fetch(address + 'Search?name=' + `${name}`)
+        fetch(address + 'Search?name=' + `${name}`,
+            {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }})
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -109,27 +145,32 @@ class ComputerList extends Component {
 
     toggleFormAccess = (computer) => () =>  {
         this.setState(prevState => ({
-          computer: computer,
-          FormMode: !prevState.FormMode,
-          UpdateMode: !prevState.UpdateMode,
+            computer: computer,
+            FormMode: !prevState.FormMode,
+            UpdateMode: !prevState.UpdateMode,
         }));
+        console.log(this.state.computer)
     };
 
     toggleAddFormAccess = () => {
         this.setState({
+            UpdateMode: false,
             FormMode: !this.state.FormMode
         })
     }
 
     render() {
+
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
+
                     <Row>
                         <Search onSearch={this.search} />
-                        <Table className="table">
+
+                        <Table>
                             <thead>
                                 <tr>
                                     <th  className="name">
@@ -159,9 +200,11 @@ class ComputerList extends Component {
                                         return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
                                     })
                                 }
+
                                 <tr>
                                     <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
+
                             </tbody>
                         </Table>
                     </Row>
