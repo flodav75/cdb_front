@@ -46,7 +46,6 @@ class CompanyList extends Component {
           </Row>
         </Container>
       </div>
-
     );
   }
 }

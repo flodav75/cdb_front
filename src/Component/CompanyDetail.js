@@ -12,7 +12,6 @@ class CompanyDetail extends Component {
                 <td>{company.id}</td>
                 <td>{company.name}</td>
             </tr>
-  
       );
     }
   }

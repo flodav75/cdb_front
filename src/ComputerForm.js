@@ -5,7 +5,10 @@ import './App.css';
 import {faPen, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Card,  CardBody, Col, Input} from 'reactstrap';
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import Select from 'react-select'
+const addressCompany = 'http://10.0.1.70:8080/webapp/api/companies/'
 
+const techCompanies = [ { label: "Apple", value: 1 }, { label: "Facebook", value: 2 }, { label: "Netflix", value: 3 }, { label: "Tesla", value: 4 }, { label: "Amazon", value: 5 }, { label: "Alphabet", value: 6 }, ];
 
 class ComputerForm extends Component {
 
@@ -14,15 +17,28 @@ class ComputerForm extends Component {
         UpdateMode: this.props.UpdateMode,
         computers: this.props.computers,
         FormMode: this.props.FormMode,
+        companies: [],
         key: this.props.key,
     };
 
     componentDidMount(){
+        this.getAllCompanies();
       if (this.state.UpdateMode){
         this.getComputerById(this.state.key);
         console.log(this.state.computer)
       }
     }
+    getAllCompanies(){
+        fetch(addressCompany)
+            .then(result => {
+                result.json().then(companies => {
+                    this.setState({ companies: companies })
+                })
+            })
+            .catch(error => console.log(error))
+    }
+
+
 
     getComputerById(id) {
         fetch('http://10.0.1.70:8080/webapp/api/computers/'+{id})
@@ -87,19 +103,18 @@ class ComputerForm extends Component {
       this.setState({computer: {...this.state.computer, companyname: event.target.value}})
     };
 
-
   render() {
     let { computer } = this.state;
+      let dropdown = this.state.companies && this.state.companies.map(company => {let test = {label: company.name, value: company.id};;return test})
     return (
       <Col md={3}>
       <Card>
         {this.state.UpdateMode ? <h1>Edit a computer</h1> : <h1>Add a computer</h1>}
         <CardBody>
-          <Input value={computer && computer.name} onChange={this.onChangeName}/>
-          <Input value={computer && computer.introduced} onChange={this.onChangeIntroduced}/>
-          <Input value={computer && computer.discontinued} onChange={this.onChangeDiscontinued}/>
-          <Input value={computer && computer.companyname} onChange={this.onChangeCompanyName}/>
-          <Input value={computer && computer.companyId} onChange={this.onChangeCompanyId}/>
+          <Input placeholer="Computer name" value={computer && computer.name} onChange={this.onChangeName}/>
+          <Input placeholer="Introduced Date" value={computer && computer.introduced} onChange={this.onChangeIntroduced}/>
+          <Input placeholer="Discontinued Date" value={computer && computer.discontinued} onChange={this.onChangeDiscontinued}/>
+            <Select options={dropdown}/>
             {this.state.UpdateMode 
             ? <FontAwesomeIcon icon={faPen} onClick={this.update(this.state.computer)}/> 
             : <FontAwesomeIcon icon={faCheck} onClick={()=>this.add(this.state.computer)}/> 
@@ -108,7 +123,6 @@ class ComputerForm extends Component {
         </CardBody>
       </Card>
     </Col>
-
     );
   }
 }
