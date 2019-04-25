@@ -21,7 +21,7 @@ class Search extends Component {
       <div className="wrap">
         <div className="search">
           <Input type="text" className="searchTerm" placeholder='Search Computer' onChange={this.onChange} value={name} />
-          <button type="submit" className="searchButton" onClick={this.props.onSearch(name)}>
+          <button type="submit" className="searchButton" onClick={this.props.onSearch(name,this.props.page.limit,this.props.page.page)}>
             <FontAwesomeIcon icon={faSearch} />
           </button>
         </div>
