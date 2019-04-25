@@ -5,7 +5,6 @@ import './App.scss';
 import {faPen, faCheck, faTimes} from '@fortawesome/free-solid-svg-icons';
 import {Card, CardBody, Col, Input, Container, Row} from 'reactstrap';
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import DatePicker from 'react-date-picker';
 import Select from 'react-select';
 
 import "./ComputerForm.scss";
