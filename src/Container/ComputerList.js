@@ -31,12 +31,13 @@ class ComputerList extends Component {
         this.getCount();
     };
 
-    /*componentDidUpdate(){
-        this.getAll();
-    }*/
+    onCancel = () => {
+        this.setState({UpdateMode: !this.state.UpdateMode,
+          FormMode: !this.state.FormMode})
+      }
 
     getAll() {
-        fetch(address/*+'page?limit='+this.state.page.limit+'&page='+this.state.page.page*/)
+        fetch(address+'page?limit='+this.state.page.limit+'&page='+this.state.page.page)
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -88,7 +89,6 @@ class ComputerList extends Component {
 
     toggleFormAccess = (computer) => () =>  {
         this.setState(prevState => ({
-          //computerFormAccess: !this.state.computerFormAccess,
           computer: computer,
           FormMode: !prevState.FormMode,
           UpdateMode: !prevState.UpdateMode,
@@ -97,7 +97,7 @@ class ComputerList extends Component {
 
     toggleAddFormAccess = () => {
         this.setState({
-            //UpdateMode: !this.state.UpdateMode,
+            UpdateMode: false,
             FormMode: !this.state.FormMode
         })
     }
@@ -106,7 +106,7 @@ class ComputerList extends Component {
         return (
             <div>
                 { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode}/> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
                 <Container>
 
                     <Row>
