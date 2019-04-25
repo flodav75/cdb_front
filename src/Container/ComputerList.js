@@ -134,7 +134,17 @@ class ComputerList extends Component {
     }
 
     sortComputer(page,sort,type) {
-        fetch(address+'Sort?page='+`${page}`+'&sort='+`${sort}`+'&type='+`${type}`)
+        fetch(address+'Sort?page='+`${page}`+'&sort='+`${sort}`+'&type='+`${type}`,
+            {
+
+
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Host': 'api.producthunt.com',
+                    'Authorization':sessionStorage.getItem('token')
+                }
+            })
             .then(result => {
                 result.json().then(computers => {
                     this.setState({ computers: computers })
@@ -200,11 +210,9 @@ class ComputerList extends Component {
                                         return <ComputerDetail key={computer.id} computer={computer} onToggle={this.toggleFormAccess} delete={this.delete}/>
                                     })
                                 }
-
                                 <tr>
                                     <td colSpan="5"><Paging page={this.state.page} count={this.state.count} onSetPage={this.setPage} change={this.setLimit}/></td>
                                 </tr>
-
                             </tbody>
                         </Table>
                     </Row>
