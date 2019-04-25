@@ -8,8 +8,6 @@ import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Select from 'react-select'
 const addressCompany = 'http://10.0.1.70:8080/webapp/api/companies/'
 
-const techCompanies = [ { label: "Apple", value: 1 }, { label: "Facebook", value: 2 }, { label: "Netflix", value: 3 }, { label: "Tesla", value: 4 }, { label: "Amazon", value: 5 }, { label: "Alphabet", value: 6 }, ];
-
 class ComputerForm extends Component {
 
     state = {

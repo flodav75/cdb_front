@@ -16,8 +16,7 @@ class ComputerDetail extends Component {
     }
 
     render(){
-        let { computer } = this.state;
-
+      let { computer } = this.state;
       return (
           <tr>
               <td onClick={this.props.onToggle(this.state.computer)}>
