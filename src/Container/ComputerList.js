@@ -36,10 +36,10 @@ class ComputerList extends Component {
         this.getCount();
     }
 
-    onCancel = () => {
+    sendBack = () => {
         this.setState({UpdateMode: !this.state.UpdateMode,
-          FormMode: !this.state.FormMode})
-      }
+            FormMode: !this.state.FormMode})
+    }
 
     getAll(page, limit) {
         fetch(address + 'page?limit=' + limit + '&page=' + page, {
@@ -106,10 +106,12 @@ class ComputerList extends Component {
         }
     };
 
+
     delete = (id)  => {
         fetch(address+`${id}`,
             {
                 method: "delete",
+
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -153,6 +155,8 @@ class ComputerList extends Component {
     sortComputer(page,sort,type,limit) {
         fetch(address+'Sort?page='+page+'&sort='+sort+'&type='+type+'&limit='+limit,
             {
+
+
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -188,8 +192,7 @@ class ComputerList extends Component {
 
         return (
             <div>
-                { !this.state.UpdateMode && <button className="btn btn-success" onClick={this.toggleAddFormAccess}>add</button> }
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onCancel={this.onCancel} /> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
                 <Container>
 
                     <Row>
@@ -238,5 +241,5 @@ class ComputerList extends Component {
     }
   }
 
-  export default ComputerList;
+export default ComputerList;
 
