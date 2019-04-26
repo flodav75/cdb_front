@@ -194,10 +194,9 @@ class ComputerList extends Component {
             <div>
             { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
                 <Container>
-
                     <Row>
                         <Search onSearch={this.toggleSearch} page={this.state.page}/>
-
+                        { !this.state.FormMode && <button className="btn btn-success float-right" onClick={this.toggleAddFormAccess} >add</button> }
                         <Table>
                             <thead>
                             <tr>
