@@ -13,7 +13,7 @@ class CompanyDetail extends Component {
             <tr>
                 <td>{company.id}</td>
                 <td>{company.name}</td>
-                <td><Button onClick={this.props.delete(company.id)}></Button></td>
+                <td><Button color="danger" onClick={this.props.delete(company.id)}>delete</Button></td>
             </tr>
       );
     }

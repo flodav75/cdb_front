@@ -26,7 +26,7 @@ class ComputerDetail extends Component {
               <td onClick={onToggle(computer)}>{computer.introduced}</td>
               <td onClick={onToggle(computer)}>{computer.discontinued}</td>
               <td onClick={onToggle(computer)}>{computer.companyname}</td>
-              <td onClick={onToggle(computer)}>
+              <td>
                   <Button color="danger" onClick={this.toggleDelete}>delete</Button>
                   {this.state.isDelete &&<DeletePopUp computer={computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
               </td>

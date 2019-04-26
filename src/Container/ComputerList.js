@@ -180,34 +180,34 @@ class ComputerList extends Component {
     }
 
     render() {
-
+        let{page}=this.state
         return (
             <div>
             { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
                 <Container>
                     <Row>
-                        <Search onSearch={this.toggleSearch} page={this.state.page}/>
+                        <Search onSearch={this.toggleSearch} page={page}/>
                         { !this.state.FormMode && <button className="btn btn-success float-right" onClick={this.toggleAddFormAccess} >add</button> }
                         <Table>
                             <thead>
                             <tr>
                                 <th  className="name">
                                     name
-                                    <FontAwesomeIcon class={'myButton'} onClick={this.toggleSort(this.state.page.page,'name','ASC')}  icon={faSortAlphaUp}/>
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(this.state.page.page,'name','DESC',this.state.page.limit)}/>
+                                    <FontAwesomeIcon class={'myButton'} onClick={this.toggleSort(page.page,'name','ASC')}  icon={faSortAlphaUp}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(page.page,'name','DESC',page.limit)}/>
                                 </th>
                                 <th  className="introduced">
                                     introduced
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(this.state.page.page,'introduced','ASC',this.state.page.limit)}/>
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown}  onClick={this.toggleSort(this.state.page.page,'introduced','DESC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(page.page,'introduced','ASC',page.limit)}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown}  onClick={this.toggleSort(page.page,'introduced','DESC')}/>
                                 </th>
                                 <th  className="discontinued">discontinued
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(this.state.page.page,'discontinued','ASC',this.state.page.limit)} />
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(this.state.page.page,'discontinued','DESC',this.state.page.limit)}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(page.page,'discontinued','ASC',page.limit)} />
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(page.page,'discontinued','DESC',page.limit)}/>
                                 </th>
                                 <th  className="company">company
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(this.state.page.page,'company','ASC',this.state.page.limit)}/>
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(this.state.page.page,'company','ASC',this.state.page.limit)} />
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(page.page,'company','ASC',page.limit)}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(page.page,'company','DESC',page.limit)} />
                                 </th>
                                 <th  className="delete">delete</th>
                             </tr>

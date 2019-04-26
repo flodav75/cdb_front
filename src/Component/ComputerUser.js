@@ -82,12 +82,11 @@ class ComputerUser extends Component {
     }
 
     onRegister=()=>{
-        var regex ="/^(([^<>()[\\]\\\\.,;:\\s@\\\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\\\"]+)*)|(\\\".+\\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/;"
+        //var regex ="/^(([^<>()[\\]\\\\.,;:\\s@\\\"]+(\\.[^<>()[\\]\\\\.,;:\\s@\\\"]+)*)|(\\\".+\\\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/;"
         let correct=true;
         let incorrect;
 
-        if (this.state.user.email==="" || !+
-            regex.match(this.state.user.email)){
+        if (this.state.user.email===""){
             incorrect="\n email "
             correct=false;
         }

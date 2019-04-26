@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 
 import './App.scss';
 
-import { faPen, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Card, CardBody, Col, Input, Container, Row } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Card, CardBody, Col, Input, Container, Row , Button} from 'reactstrap';
 import Select from 'react-select';
 
 import "./ComputerForm.scss";
@@ -68,7 +66,7 @@ class ComputerForm extends Component {
         'Host': 'api.producthunt.com',
         'Authorization':sessionStorage.getItem('token')},
         body: JSON.stringify(computer)
-      }).catch(error => console.error(error))
+      }).catch(error => alert(error))
     this.props.onSendBack();
   }
 
@@ -152,23 +150,17 @@ class ComputerForm extends Component {
               <CardBody>
                 Computer Name
                 <Input placeholer="Computer name" value={computer && computer.name} onChange={this.onChangeName} />
-                Introduced Date <input type="date"
-                  onChange={this.onChangeIntroduced}
-                  value={computer && computer.introduced}
-                />
+                Introduced Date
                 <Input type="date" placeholer="Introduced Date" value={computer && computer.introduced} onChange={this.onChangeIntroduced} />
-                Discontinued Date <input type="date"
-                  onChange={this.onChangeDiscontinued}
-                  value={computer && computer.discontinued}
-                />
+                Discontinued Date
                 <Input type="date" placeholer="Discontinued Date" value={computer && computer.discontinued} onChange={this.onChangeDiscontinued} />
                 Company
                 <Select options={dropdown} onChange={this.onChangeCompany} />
                 {this.state.UpdateMode
-                  ? <FontAwesomeIcon icon={faPen} onClick={this.update(computer)} />
-                  : <FontAwesomeIcon icon={faCheck} onClick={() => this.add(computer)} />
+                  ? <Button onClick={this.update(computer)} >Update</Button>
+                  : <Button onClick={() => this.add(computer)} >Add</Button>
                 }
-                <FontAwesomeIcon icon={faTimes} onClick={() => this.props.onSendBack()} />
+                <Button onClick={() => this.props.onSendBack()}>Cancel</Button>
               </CardBody>
             </Card>
           </Col>
