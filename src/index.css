@@ -178,7 +178,7 @@ button:focus {
 
 .overlay {
   background: -webkit-linear-gradient(#8CA6DB, #B993D6);
-  background: linear-gradient(#8CA6DB, #B993D6);
+  background: linear-gradient(#555555, grey);
   opacity: 0.85;
   filter: alpha(opacity=85);
   height: 650px;

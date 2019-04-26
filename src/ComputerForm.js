@@ -43,7 +43,13 @@ class ComputerForm extends Component {
   }
 
   getComputerById(id) {
-    fetch('http://10.0.1.70:8080/webapp/api/computers/' + { id })
+    fetch('http://10.0.1.70:8080/webapp/api/computers/' + { id },
+    {headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Host': 'api.producthunt.com',
+      'Authorization':sessionStorage.getItem('token')
+      }})
       .then(result => {
         result.json()
           .then(computer => {
@@ -56,9 +62,11 @@ class ComputerForm extends Component {
   update = (computer) => () => {
     this.setState({ id: this.state.computer.id })
     fetch('http://10.0.1.70:8080/webapp/api/computers/' + computer.id,
-      {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      { method: "PUT",
+        headers: { 'Accept': 'application/json',
+        "Content-Type": "application/json" ,
+        'Host': 'api.producthunt.com',
+        'Authorization':sessionStorage.getItem('token')},
         body: JSON.stringify(computer)
       }).catch(error => console.error(error))
     this.props.onSendBack();
@@ -74,7 +82,10 @@ class ComputerForm extends Component {
     fetch('http://10.0.1.70:8080/webapp/api/computers/',
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Accept': 'application/json',
+        "Content-Type": "application/json",
+        'Host': 'api.producthunt.com',
+        'Authorization':sessionStorage.getItem('token')},
         body: JSON.stringify(computer)
       }).catch(error => console.error(error))
   }
@@ -112,7 +123,7 @@ class ComputerForm extends Component {
     let dropdown = this.state.companies && this.state.companies.map(company => { let test = { label: company.name, value: company.id }; return test })
 
     return (
-      <Container>
+      <Container >
         <Row>
           <Col md={{ size: 6, offset: 3 }} >
             <Card>
@@ -124,12 +135,12 @@ class ComputerForm extends Component {
                   onChange={this.onChangeIntroduced}
                   value={computer && computer.introduced}
                 />
-                <Input placeholer="Introduced Date" value={computer && computer.introduced} onChange={this.onChangeIntroduced} />
+                <Input type="date" placeholer="Introduced Date" value={computer && computer.introduced} onChange={this.onChangeIntroduced} />
                 Discontinued Date <input type="date"
                   onChange={this.onChangeDiscontinued}
                   value={computer && computer.discontinued}
                 />
-                <Input placeholer="Discontinued Date" value={computer && computer.discontinued} onChange={this.onChangeDiscontinued} />
+                <Input type="date" placeholer="Discontinued Date" value={computer && computer.discontinued} onChange={this.onChangeDiscontinued} />
                 Company
                 <Select options={dropdown} onChange={this.onChangeCompany} />
                 {this.state.UpdateMode
