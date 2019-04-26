@@ -100,15 +100,6 @@ class ComputerForm extends Component {
     this.setState({ computer: { ...this.state.computer, introduced: event.target.value } })
   };
 
-  onChangeIntroduced3 = introDate => {
-    this.setState({ introDate },
-      { computer: { ...this.state.computer, discontinued: introDate } })
-  }
-
-  onChangeIntroduced2 = (event) => {
-    this.setState({ computer: { ...this.state.computer, discontinued: event.target.value } })
-  }
-
   onChangeDiscontinued = (event) => {
     this.setState({ computer: { ...this.state.computer, discontinued: event.target.value } })
   };
@@ -117,6 +108,36 @@ class ComputerForm extends Component {
     this.setState({ computer: { ...this.state.computer, companyname: selected.label, companyId: selected.value } });
   }
 
+  onValidate=()=>{
+    var regex= "^(([1-9])|(0[1-9])|(1[0-2]))-(([0-9])|([0-2][0-9])|(3[0-1]))-(([0-9][0-9])|([1-2][0,9][0-9][0-9]))$";
+    let correct=true;
+    let incorrect;
+  
+  
+    if (this.state.computer.name===""){
+        incorrect="\n name "
+        correct=false;
+    }
+    if (!regex.match(this.state.computer.introduced)){
+        incorrect=incorrect+"\n introduced date "
+        correct=false;
+    }
+  
+    if (!regex.match(this.state.computer.introduced)){
+      incorrect=incorrect+"\n discontinued date "
+      correct=false;
+  }
+  
+    if(correct===true) {
+      this.state.UpdateMode
+        ? this.update(this.state.computer)
+        : this.add(this.state.computer)
+    }else{
+        alert("Le ou les champs: " + incorrect + "\nsont vides ou incorrects")
+    }
+  
+  
+  }
 
   render() {
     let { computer } = this.state;
