@@ -17,17 +17,18 @@ class ComputerDetail extends Component {
 
     render(){
       let { computer } = this.state;
+      let{onToggle} = this.props;
       return (
           <tr>
-              <td onClick={this.props.onToggle(this.state.computer)}>
-                {this.state.computer.name}
+              <td onClick={onToggle(computer)}>
+                {computer.name}
               </td>
-              <td>{computer.introduced}</td>
-              <td>{this.state.computer.discontinued}</td>
-              <td>{this.state.computer.companyname}</td>
-              <td>
+              <td onClick={onToggle(computer)}>{computer.introduced}</td>
+              <td onClick={onToggle(computer)}>{computer.discontinued}</td>
+              <td onClick={onToggle(computer)}>{computer.companyname}</td>
+              <td onClick={onToggle(computer)}>
                   <Button color="danger" onClick={this.toggleDelete}>delete</Button>
-                  {this.state.isDelete &&<DeletePopUp computer={this.state.computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
+                  {this.state.isDelete &&<DeletePopUp computer={computer}  toggleDelete={this.toggleDelete} delete={this.props.delete}/>}
               </td>
           </tr>
       );

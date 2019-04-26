@@ -55,7 +55,7 @@ class ComputerList extends Component {
                 this.setState({ computers: computers })
             })
         })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     }
 
     getCount() {
@@ -73,21 +73,18 @@ class ComputerList extends Component {
                     this.setState({ count: count })
                 })
             })
-            .catch(error => console.log(error))
+            .catch(error => console.error(error))
     };
 
     setPage = (newPage) => () =>{
         this.setState({page: { ...this.state.page, page: newPage}});
         if(this.state.isSort){
             this.sortComputer(newPage,this.state.sort,this.state.type,this.state.page.limit);
-            console.log('sort');
         }
         else if(this.state.isSearch){
             this.search(this.state.name, this.state.page.limit,newPage);
-            console.log('search');
         }else{
             this.getAll(newPage, this.state.page.limit);
-            console.log('getall');
         }
     };
 
@@ -95,14 +92,11 @@ class ComputerList extends Component {
         this.setState({page: {...this.state.page, limit: event.target.value}})
         if(this.state.isSort){
             this.sortComputer(event.target.value,this.state.sort,this.state.type,this.state.page.limit);
-            console.log('sort');
         }
         else if(this.state.isSearch){
             this.search(this.state.name, event.target.value,this.state.page.page);
-            console.log('search');
         }else{
             this.getAll(this.state.page.page, event.target.value);
-            console.log('getall');
         }
     };
 
@@ -111,7 +105,6 @@ class ComputerList extends Component {
         fetch(address+`${id}`,
             {
                 method: "delete",
-
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -120,7 +113,6 @@ class ComputerList extends Component {
                 }
             }
         ).then(()=>{
-            console.log("fin")
             this.getAll(this.state.page.page, this.state.page.limit)
         })
     }
@@ -178,7 +170,6 @@ class ComputerList extends Component {
             FormMode: !prevState.FormMode,
             UpdateMode: !prevState.UpdateMode,
         }));
-        console.log(this.state.computer)
     };
 
     toggleAddFormAccess = () => {
@@ -192,7 +183,7 @@ class ComputerList extends Component {
 
         return (
             <div>
-            { this.state.FormMode ? <ComputerForm computer={this.state.computer} FormMode={this.state.FormMode} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
+            { this.state.FormMode ? <ComputerForm computer={this.state.computer} UpdateMode={this.state.UpdateMode} FormMode={this.state.FormMode} onSendBack={this.sendBack}/> :
                 <Container>
 
                     <Row>
