@@ -131,7 +131,7 @@ class ComputerUser extends Component {
                         <div className = 'overlay'> </div>
                             <div className='content'>
                                 <div className='welcome'>Hello There!</div>
-                                    <div className='subtitle'>We're almost done. Before using our services you need to create an account.</div>
+                                    <div className='subtitle'>Welcome to Computer Database  </div>
                                         <div className='input-fields'>
                                             {this.state.RegisterMode &&
                                             <div>
