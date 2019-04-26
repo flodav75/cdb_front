@@ -23,13 +23,13 @@ class ComputerList extends Component {
                 FormMode: false,
                 UpdateMode: false,
                 isSort: false,
+        isSearch:false,
                 page: {
                     limit: 15,
                     page: 1,
 
                 },
             }
-
 
     componentDidMount() {
         this.getAll(this.state.page.page, this.state.page.limit);
@@ -79,8 +79,12 @@ class ComputerList extends Component {
     setPage = (newPage) => () =>{
         this.setState({page: { ...this.state.page, page: newPage}});
         if(this.state.isSort){
-            this.sortComputer(newPage,this.state.sort,this.state.type);
+            this.sortComputer(newPage,this.state.sort,this.state.type,this.state.page.limit);
             console.log('sort');
+        }
+        else if(this.state.isSearch){
+            this.search(this.state.name, this.state.page.limit,newPage);
+            console.log('search');
         }else{
             this.getAll(newPage, this.state.page.limit);
             console.log('getall');
@@ -89,7 +93,17 @@ class ComputerList extends Component {
 
     setLimit = (event) => {
         this.setState({page: {...this.state.page, limit: event.target.value}})
-        this.getAll(this.state.page.page, event.target.value);
+        if(this.state.isSort){
+            this.sortComputer(event.target.value,this.state.sort,this.state.type,this.state.page.limit);
+            console.log('sort');
+        }
+        else if(this.state.isSearch){
+            this.search(this.state.name, event.target.value,this.state.page.page);
+            console.log('search');
+        }else{
+            this.getAll(this.state.page.page, event.target.value);
+            console.log('getall');
+        }
     };
 
 
@@ -111,8 +125,8 @@ class ComputerList extends Component {
         })
     }
 
-    search = (name) => () => {
-        fetch(address + 'Search?name=' + `${name}`,
+    search = (name,limit,page) => {
+        fetch(address + 'Search?name=' + name+'&limit='+limit+'&page='+page,
             {
                 headers: {
                     'Accept': 'application/json',
@@ -128,13 +142,18 @@ class ComputerList extends Component {
             .catch(error => console.error(error))
     };
 
-    toggleSort=(page,sort,type)=>()=>{
-        this.setState({isSort:!this.state.isSort,sort:sort,type:type});
-        this.sortComputer(page,sort,type);
+    toggleSearch=(name,limit,page)=>()=>{
+        this.setState({isSearch:!this.state.isSearch, name: name});
+        this.search(name,limit,page);
     }
 
-    sortComputer(page,sort,type) {
-        fetch(address+'Sort?page='+`${page}`+'&sort='+`${sort}`+'&type='+`${type}`,
+    toggleSort=(page,sort,type)=>()=>{
+        this.setState({isSort:!this.state.isSort,sort:sort,type:type});
+        this.sortComputer(page,sort,type,this.state.page.limit);
+    }
+
+    sortComputer(page,sort,type,limit) {
+        fetch(address+'Sort?page='+page+'&sort='+sort+'&type='+type+'&limit='+limit,
             {
 
 
@@ -177,28 +196,28 @@ class ComputerList extends Component {
                 <Container>
 
                     <Row>
-                        <Search onSearch={this.search} />
-                        { !this.state.FormMode && <button className="btn btn-success float-right" onClick={this.toggleAddFormAccess} >add</button> }
+                        <Search onSearch={this.toggleSearch} page={this.state.page}/>
+
                         <Table>
                             <thead>
                             <tr>
                                 <th  className="name">
                                     name
                                     <FontAwesomeIcon class={'myButton'} onClick={this.toggleSort(this.state.page.page,'name','ASC')}  icon={faSortAlphaUp}/>
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(this.state.page.page,'name','DESC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown} onClick={this.toggleSort(this.state.page.page,'name','DESC',this.state.page.limit)}/>
                                 </th>
                                 <th  className="introduced">
                                     introduced
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(this.state.page.page,'introduced','ASC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp} onClick={this.toggleSort(this.state.page.page,'introduced','ASC',this.state.page.limit)}/>
                                     <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown}  onClick={this.toggleSort(this.state.page.page,'introduced','DESC')}/>
                                 </th>
                                 <th  className="discontinued">discontinued
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(this.state.page.page,'discontinued','ASC')} />
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(this.state.page.page,'discontinued','DESC')}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountUp}  onClick={this.toggleSort(this.state.page.page,'discontinued','ASC',this.state.page.limit)} />
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAmountDown} onClick={this.toggleSort(this.state.page.page,'discontinued','DESC',this.state.page.limit)}/>
                                 </th>
                                 <th  className="company">company
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')}/>
-                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(this.state.page.page,'company','ASC')} />
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaUp}  onClick={ this.toggleSort(this.state.page.page,'company','ASC',this.state.page.limit)}/>
+                                    <FontAwesomeIcon class={'myButton'} icon={faSortAlphaDown}  onClick={ this.toggleSort(this.state.page.page,'company','ASC',this.state.page.limit)} />
                                 </th>
                                 <th  className="delete">delete</th>
                             </tr>

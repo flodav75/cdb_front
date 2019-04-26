@@ -127,7 +127,7 @@ class ComputerUser extends Component {
             <div>
 
                 <div className='bold-line'></div>
-                <div className = 'container'>
+                <div className = 'container-Momo'>
                     <div className = 'window'>
                         <div className = 'overlay'> </div>
                             <div className='content'>
